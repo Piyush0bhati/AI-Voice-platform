@@ -34,7 +34,7 @@ const LANGUAGES = [
   { code: "Punjabi", label: "ਪੰਜਾਬੀ (Punjabi)" },
 ] as const;
 
-export function TalkToAgentWidget({ variant = "default" }: { variant?: "default" | "landing" }) {
+export function TalkToAgentWidget() {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [selectedCountry, setSelectedCountry] = useState<(typeof COUNTRY_CODES)[number]>(COUNTRY_CODES[0]);
@@ -64,7 +64,7 @@ export function TalkToAgentWidget({ variant = "default" }: { variant?: "default"
 
   // Handle Outbound Phone Call "Initiate call"
   const handleInitiateCall = async () => {
-    const clean = phoneNumber.trim().replace(/[^\d+]/g, "");
+    let clean = phoneNumber.trim().replace(/[^\d+]/g, "");
     if (!clean) {
       setCallingState("error");
       setStatusMessage("Please enter your phone number.");
@@ -121,7 +121,7 @@ export function TalkToAgentWidget({ variant = "default" }: { variant?: "default"
   };
 
   return (
-    <div className={`${styles.phoneScreenWrapper} ${variant === "landing" ? styles.landingVariant : ""}`} ref={dropdownRef}>
+    <div className={styles.phoneScreenWrapper} ref={dropdownRef}>
       {/* Top Phone Status & Dynamic Island */}
       <div className={styles.phoneTopBar}>
         <span className={styles.phoneTime}>9:41</span>
@@ -146,8 +146,8 @@ export function TalkToAgentWidget({ variant = "default" }: { variant?: "default"
             Live Call
           </span>
         </div>
-        <h3 className={styles.deviceTitle}>{variant === "landing" ? "Try a live AI call" : "Talk to your AI agent"}</h3>
-        <p className={styles.deviceSubtitle}>{variant === "landing" ? "Choose an agent and enter your number." : "Experience a live phone call in your preferred language"}</p>
+        <h3 className={styles.deviceTitle}>Talk to your AI agent</h3>
+        <p className={styles.deviceSubtitle}>Experience a live phone call in your preferred language</p>
       </div>
 
       {/* Active Persona Badge */}
@@ -221,7 +221,7 @@ export function TalkToAgentWidget({ variant = "default" }: { variant?: "default"
         </div>
 
         {/* Language Selection */}
-        <div className={`${styles.fieldGroup} ${variant === "landing" ? styles.landingOptionalField : ""}`}>
+        <div className={styles.fieldGroup}>
           <label className={styles.fieldLabel}>Conversation Language</label>
           <div className={styles.languageWrapper}>
             <span className={styles.langIcon}>🌐</span>

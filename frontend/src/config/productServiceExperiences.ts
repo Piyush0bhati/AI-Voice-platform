@@ -26,7 +26,7 @@ export const productServiceExperiences: Record<string, ProductServiceExperience>
     heroTitle: "Build Intelligent",
     heroAccent: "Voice Agents",
     proof: [
-      { value: "Configured", label: "inbound and outbound coverage" },
+      { value: "24/7", label: "inbound and outbound coverage" },
       { value: "Live", label: "tool use during conversations" },
       { value: "Warm", label: "human handoffs with context" },
     ],
@@ -559,60 +559,6 @@ export const productServiceExperiences: Record<string, ProductServiceExperience>
       { question: "How can agent actions be limited?", answer: "Give tools the minimum permissions required, validate inputs in downstream systems, require confirmation for consequential actions, and route higher-impact decisions to authorized people." },
       { question: "Which calls should humans review?", answer: "Use a mix of random sampling and targeted review based on failed outcomes, low confidence, escalation, sensitive topics, complaints, unusual duration, or other workflow-specific risk signals." },
       { question: "Do quality controls guarantee compliance?", answer: "No. They help teams implement and observe boundaries, but each organization remains responsible for legal, regulatory, security, and policy review for its specific data, industry, and operating regions." },
-    ],
-  },
-  "book-appointments": {
-    label: "Appointment Booking",
-    heroTitle: "Book Appointments",
-    heroAccent: "With AI Voice Agents",
-    proof: [
-      { value: "Connected", label: "scheduling coverage" },
-      { value: "Realtime", label: "calendar availability check" },
-      { value: "Automated", label: "SMS reminders and confirmations" },
-    ],
-    demo: {
-      status: "Call in progress",
-      caller: "I'd like to book an appointment next Wednesday afternoon.",
-      agent: "I have 10:15 AM, 2:30 PM, and 4:00 PM available with Dr. Jenkins. Which works best?",
-      action: "Calendar availability confirmed",
-    },
-    capabilities: [
-      {
-        eyebrow: "Live calendar sync",
-        title: "Book appointments directly in the caller's requested slot",
-        body: "Agents check live availability across Cal.com, Google Calendar, Outlook, and EHRs, reserving slots instantly without double-booking.",
-        points: ["Real-time availability check", "Timezone & buffer handling", "Instant confirmation"],
-      },
-      {
-        eyebrow: "Conversational intake",
-        title: "Collect necessary details before confirming the appointment",
-        body: "Gather caller name, phone number, reason for visit, and insurance or service type in a natural, empathetic turn-taking conversation.",
-        points: ["Structured field collection", "Interruption tolerance", "Validation against business rules"],
-      },
-      {
-        eyebrow: "Smart rescheduling",
-        title: "Handle changes, cancellations, and notifications effortlessly",
-        body: "Callers can move or cancel appointments by phone anytime. The agent frees up the previous slot and dispatches updated calendar invites and SMS notes.",
-        points: ["Automated conflict resolution", "SMS & email broadcast", "Care team alert"],
-      },
-    ],
-    workflow: [
-      { title: "Create your booking agent", body: "Define intent rules and add 'Check Availability' and 'Book Appointment' tools." },
-      { title: "Connect your calendar", body: "Link Cal.com, Google Calendar, Outlook, or your EHR system in 1 click." },
-      { title: "Define your flow", body: "Instruct your voice agent when to check availability and when to confirm the booking." },
-      { title: "Track and optimize", body: "Review live booking completion rates, speech turnaround latency, and call outcomes." },
-    ],
-    useCases: [
-      { title: "Healthcare & Clinic Intake", body: "Schedule patient visits, doctor consultations, and annual physicals.", outcome: "Booking outcomes tracked" },
-      { title: "Sales Demo Scheduling", body: "Qualify inbound prospects and place meetings directly on sales reps' calendars.", outcome: "Clear follow-up records" },
-      { title: "Home Services & Dispatch", body: "Book repair slots and dispatch technicians without losing callers to voicemail.", outcome: "Dispatch availability configured" },
-    ],
-    integrations: ["Cal.com", "Google Calendar", "Microsoft Outlook", "Epic Systems", "ServiceTitan", "Twilio SMS"],
-    faqs: [
-      { question: "How does the AI agent access open calendar slots?", answer: "Vozon integrates directly with Cal.com, Google Calendar, Outlook, and EHRs via OAuth or API keys, querying available time blocks in real time while respecting working hours and buffers." },
-      { question: "Can callers reschedule or cancel an existing appointment?", answer: "Yes. The agent identifies the caller by phone number or confirmation code, looks up their existing booking, and moves or cancels it according to your cancellation policy." },
-      { question: "What happens if no slots are available on the requested date?", answer: "The agent politely explains that the requested day is fully booked and proactively offers the closest open slots on adjacent days." },
-      { question: "Does the caller receive an appointment confirmation?", answer: "Yes. As soon as the booking is confirmed, Vozon triggers an automated SMS text message and calendar invite with appointment details and address." },
     ],
   },
 };

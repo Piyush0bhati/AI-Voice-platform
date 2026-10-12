@@ -5,7 +5,7 @@ export const siteConfig = {
     { href: "/", label: "Home" },
     { href: "/product", label: "Products", hasMenu: true },
     { href: "/pricing", label: "Pricing" },
-    { href: "/business", label: "Solutions", hasMenu: true },
+    { href: "/business", label: "For Business", hasMenu: true },
     { href: "/about", label: "Company", hasMenu: true },
   ],
   headerActions: [
@@ -23,7 +23,6 @@ export const siteConfig = {
         title: "Build",
         links: [
           { href: "/services/voice-agents", label: "Voice Agents" },
-          { href: "/services/book-appointments", label: "Book Appointments" },
           { href: "/services/voice-cloning", label: "Voice Cloning" },
           { href: "/services/realtime-tts", label: "Realtime TTS" },
           { href: "/services/multilingual-speech", label: "Multilingual Speech" },
@@ -212,7 +211,7 @@ export const platformFeatures = [
   {
     title: "Multilingual",
     icon: "ML",
-    body: "Localize scripts across supported languages while preserving pace, emotion, and clarity.",
+    body: "Localize scripts across 140+ languages while preserving pace, emotion, and clarity.",
   },
   {
     title: "Realtime TTS",
@@ -684,7 +683,7 @@ export const servicePages = [
     kicker: "Build",
     summary:
       "Deploy AI-powered voice agents that understand natural conversation, resolve customer needs in real time, and scale effortlessly across every call.",
-    highlights: ["Configured call handling", "Lead qualification", "Human handoff rules"],
+    highlights: ["24/7 call handling", "Lead qualification", "Human handoff rules"],
     sections: [
       {
         title: "Always-on conversations",
@@ -738,7 +737,7 @@ export const servicePages = [
     kicker: "Build",
     summary:
       "Localize voice experiences across languages while preserving clarity, emotion, and customer intent.",
-    highlights: ["Supported languages", "Localized scripts", "Natural pronunciation"],
+    highlights: ["140+ languages", "Localized scripts", "Natural pronunciation"],
     sections: [
       {
         title: "Speak to every market",
@@ -855,24 +854,6 @@ export const servicePages = [
       {
         title: "Review what matters",
         body: "Track quality signals across calls and focus review time on conversations that need human attention.",
-      },
-    ],
-  },
-  {
-    slug: "book-appointments",
-    title: "Book Appointments",
-    kicker: "Build",
-    summary:
-      "Automate appointment scheduling with conversational AI that checks availability, confirms slots, and sends reminders.",
-    highlights: ["Connected scheduling", "Realtime availability sync", "Automated SMS reminders"],
-    sections: [
-      {
-        title: "Check availability instantly",
-        body: "Connect your Cal.com, Google Calendar, Outlook, or EHR system to query live openings in real time.",
-      },
-      {
-        title: "From call to confirmed",
-        body: "Fill your calendar with confirmed appointments directly during the call with zero scheduling friction.",
       },
     ],
   },

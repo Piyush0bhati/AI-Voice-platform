@@ -260,7 +260,7 @@ const privacySections = [
 export default function PrivacyPage() {
   return (
     <SiteLayout>
-      <div className="min-h-screen overflow-hidden !bg-white text-black" id="privacy-page">
+      <div className="min-h-screen overflow-hidden !bg-white text-black">
         {/* =========================================================
             HERO — Terms-style soft blurry background wash
         ========================================================== */}
@@ -289,7 +289,7 @@ export default function PrivacyPage() {
               <span className="font-bold text-black">Privacy</span>
             </nav>
 
-            <div className="mx-auto max-w-[780px] text-center" data-ss-reveal-group="" data-y="38">
+            <div className="mx-auto max-w-[780px] text-center">
               {/* PRIVACY ICON — Terms style (soft blue background, no border) */}
               <span className="mx-auto grid size-16 place-items-center rounded-xl bg-[#EAF7F4] text-[#108D82] shadow-[0_18px_45px_rgba(16,141,130,0.10)]">
                 <svg
@@ -314,7 +314,7 @@ export default function PrivacyPage() {
                 </svg>
               </span>
 
-              <h1 className="ss-text-reveal-blur mt-7 text-5xl font-semibold leading-none tracking-normal text-black sm:text-6xl">
+              <h1 className="mt-7 text-5xl font-semibold leading-none tracking-normal text-black sm:text-6xl">
                 Privacy Policy
               </h1>
 
@@ -352,7 +352,7 @@ export default function PrivacyPage() {
             INTRODUCTION + IMPORTANT NOTICE
         ========================================================== */}
         <section className="bg-white px-[clamp(1.25rem,5vw,4.75rem)] pb-10">
-          <div className="mx-auto max-w-[1040px] space-y-5" data-ss-reveal-group="" data-y="34">
+          <div className="mx-auto max-w-[1040px] space-y-5">
             {/* INTRO CARD */}
             <div className="flex flex-col gap-5 rounded-lg border border-[#E2E2E2] bg-white p-6 shadow-[0_22px_55px_rgba(0,0,0,0.04)] sm:flex-row sm:items-start sm:p-8">
               {/* Icon — Terms style */}
@@ -427,7 +427,7 @@ export default function PrivacyPage() {
             PRIVACY SECTIONS
         ========================================================== */}
         <section className="bg-white px-[clamp(1.25rem,5vw,4.75rem)] pb-24 pt-4 sm:pb-28">
-          <div className="mx-auto max-w-[1040px] space-y-6" data-ss-reveal-group="" data-y="34">
+          <div className="mx-auto max-w-[1040px] space-y-6">
             {privacySections.map((section) => (
               <article
                 className="privacy-policy-section scroll-mt-28 rounded-lg border border-[#E2E2E2] bg-white p-5 shadow-[0_22px_60px_rgba(0,0,0,0.035)] sm:p-8"

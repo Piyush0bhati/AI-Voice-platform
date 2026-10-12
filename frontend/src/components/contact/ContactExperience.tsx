@@ -1,140 +1,732 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 import { API_URL } from "@/lib/apiBase";
-import "@/components/contact/ContactExperience.css";
 
-const cards = [
-  { type: "address", title: "Our Address", lines: ["Behind Manyata Tech Park, Hebbal,", "Bangalore 560077, India."], href: "https://maps.google.com/?q=Manyata+Tech+Park+Hebbal+Bangalore" },
-  { type: "email", title: "Email Us", lines: ["hello@vozon.ai"], href: "mailto:hello@vozon.ai" },
-  { type: "phone", title: "Call Us", lines: ["+91 78925 18414"], href: "tel:+917892518414" },
-] as const;
+const salesEmail = "hello@vozon.ai";
 
-function ContactIcon({ type }: { type: "address" | "email" | "phone" }) {
-  if (type === "address") return <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 35s11-9.4 11-20A11 11 0 0 0 9 15c0 10.6 11 20 11 20Z"/><circle cx="20" cy="15" r="4"/></svg>;
-  if (type === "email") return <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 11h24a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4v-8"/><path d="m10 14 10 8 10-8M4 27h10M4 21h7"/></svg>;
-  return <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 6h7l3 8-5 3a25 25 0 0 0 7 7l3-5 8 3v7c0 3-2 5-5 5C17 33 7 23 6 10c0-3 2-4 6-4Z"/><path d="M26 7c4 1 7 4 8 8M26 12c2 .5 3.5 2 4 4"/></svg>;
+type IconName =
+| "arrow"
+| "calendar"
+| "chat"
+| "clock"
+| "email"
+| "headset"
+| "location"
+| "phone"
+| "send"
+| "shield"
+| "team";
+
+function Icon({
+name,
+className = "size-5",
+}: {
+name: IconName;
+className?: string;
+}) {
+const paths: Record<IconName, React.ReactNode> = {
+arrow: ( <path d="M4 10h12m-4.5-4.5L16 10l-4.5 4.5" />
+),
+calendar: ( <path d="M6 2v3m8-3v3M3.5 8h13M5 4h10a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
+),
+chat: ( <path d="M4 4.5h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9l-4.5 3v-3H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z" />
+),
+clock: ( <path d="M10 2.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15Zm0 3v4.7l3 1.8" />
+),
+email: ( <path d="M3 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 17 16.5H3A1.5 1.5 0 0 1 1.5 15V7A1.5 1.5 0 0 1 3 5.5Zm-.5 1 7.5 6 7.5-6" />
+),
+headset: ( <path d="M3 11v-1a7 7 0 0 1 14 0v1M3 11h2.5v5H4.8A1.8 1.8 0 0 1 3 14.2V11Zm14 0h-2.5v5H17v.5a1.5 1.5 0 0 1-1.5 1.5H12" />
+),
+location: ( <path d="M16.5 8.5c0 4.8-6.5 9.2-6.5 9.2S3.5 13.3 3.5 8.5a6.5 6.5 0 1 1 13 0ZM10 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+),
+phone: ( <path d="M5.2 2.5 8 6.1 6.3 8a12.2 12.2 0 0 0 5.7 5.7l1.9-1.7 3.6 2.8-.8 2.3c-.3.8-1.1 1.3-2 1.2C7.8 17.4 2.6 12.2 1.7 5.3c-.1-.9.4-1.7 1.2-2l2.3-.8Z" />
+),
+send: ( <path d="m2.5 9.2 15-6.7-5.8 15-2.2-6.9-7-1.4Zm7 1.4 8-8.1" />
+),
+shield: ( <path d="M10 2.2 16.5 5v4.2c0 4.1-2.8 7.2-6.5 8.6-3.7-1.4-6.5-4.5-6.5-8.6V5L10 2.2Z" />
+),
+team: ( <path d="M7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm6.5-1a2.5 2.5 0 1 0 0-5M1.8 17a5.2 5.2 0 0 1 10.4 0m1.3-5.3A4.6 4.6 0 0 1 18.2 16" />
+),
+};
+
+return ( <svg
+   aria-hidden="true"
+   className={className}
+   fill="none"
+   viewBox="0 0 20 20"
+ > <g
+     stroke="currentColor"
+     strokeLinecap="round"
+     strokeLinejoin="round"
+     strokeWidth="1.6"
+   >
+{paths[name]} </g> </svg>
+);
 }
 
+const contactChannels = [
+{
+icon: "phone" as const,
+eyebrow: "Speak with our team",
+title: "Call us",
+body: "Talk directly with our team about your voice AI requirements and next steps.",
+href: "tel:+917892518414",
+action: "+91 78925 18414",
+},
+{
+icon: "email" as const,
+eyebrow: "Email our team",
+title: "Sales enquiries",
+body: "Tell us about your use case and the conversations you want to automate.",
+href: `mailto:${salesEmail}?subject=Sales%20enquiry`,
+action: salesEmail,
+},
+{
+icon: "calendar" as const,
+eyebrow: "Launch under your brand",
+title: "White-label partnerships",
+body: "Tell us about your customers, expected usage, and brand so our team can review the right partner setup.",
+href: "#contact-form",
+action: "Request partner review",
+},
+{
+icon: "headset" as const,
+eyebrow: "Already using vozon.ai?",
+title: "Product support",
+body: "Sign in to your workspace for help with an existing account or deployment.",
+href: "/login",
+action: "Go to your account",
+},
+] as const;
+
+const nextSteps = [
+{
+number: "01",
+title: "We learn about your calls",
+body: "We review your call volume, customer journey, languages, integrations, and success criteria.",
+},
+{
+number: "02",
+title: "We map a practical rollout",
+body: "Together, we define the first workflow, required guardrails, human handoffs, and launch plan.",
+},
+{
+number: "03",
+title: "You see the platform in action",
+body: "We tailor the conversation around your use case so your team can evaluate the right capabilities.",
+},
+] as const;
+
+const officeLocations = [
+{
+city: "Bangalore(HQ)",
+label: "Our headquarters",
+address: "Behind Manyata Tech Park, Hebbal, Bangalore 560077.",
+},
+{
+city: "Lucknow",
+label: "Second India office",
+address: "Experion,V296+9MM, AV 7, Vibhuti Khand, Gomti Nagar, Lucknow, Uttar Pradesh 226010.",
+},
+{
+city: "USA",
+label: "Our office",
+address: "300 Quail Ridge Dr NE, ADA, MI 49301",
+},
+] as const;
+
 export function ContactExperience() {
-  const [status, setStatus] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const phoneInputRef = useRef<HTMLInputElement>(null);
+const [status, setStatus] = useState("");
+const [isSubmitting, setIsSubmitting] = useState(false);
+const phoneInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const phone = new URLSearchParams(window.location.search).get("phone");
-    if (phone && phoneInputRef.current) phoneInputRef.current.value = phone.replace(/[^+\d\s()-]/g, "").slice(0, 40);
-  }, []);
+useEffect(() => {
+const suppliedPhone = new URLSearchParams(window.location.search).get(
+"phone",
+);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!form.reportValidity()) return;
-    const values = new FormData(form);
-    const parts = String(values.get("name") ?? "").trim().split(/\s+/).filter(Boolean);
-    const firstName = parts.shift() || "Customer";
-    const lastName = parts.join(" ") || "Enquiry";
-    const subject = String(values.get("subject") ?? "").trim();
-    const payload = {
-      firstName,
-      lastName,
-      email: String(values.get("email") ?? "").trim(),
-      phone: String(values.get("phone") ?? "").trim(),
-      company: subject,
-      inquiry: "Other",
-      message: String(values.get("message") ?? "").trim(),
-      website: String(values.get("website") ?? "").trim(),
-    };
-    setIsSubmitting(true);
-    setStatus("");
-    try {
-      const response = await fetch(`${API_URL}/api/contact`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-      const result = (await response.json().catch(() => ({}))) as { message?: string };
-      if (!response.ok) throw new Error(result.message || "We could not send your message. Please try again.");
-      form.reset();
-      setStatus(result.message || "Thanks — your message has been sent to our team.");
-    } catch (error) {
-      setStatus(error instanceof Error ? error.message : "Please email hello@vozon.ai directly.");
-    } finally {
-      setIsSubmitting(false);
-    }
+
+if (suppliedPhone && phoneInputRef.current) {
+  phoneInputRef.current.value = suppliedPhone
+    .replace(/\D/g, "")
+    .slice(0, 15);
+}
+
+}, []);
+
+async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+event.preventDefault();
+const form = event.currentTarget;
+
+
+if (!form.reportValidity()) return;
+
+const values = new FormData(form);
+
+const payload = {
+  firstName: String(values.get("firstName") ?? "").trim(),
+  lastName: String(values.get("lastName") ?? "").trim(),
+  email: String(values.get("email") ?? "").trim(),
+  phone: String(values.get("phone") ?? "").trim(),
+  company: String(values.get("company") ?? "").trim(),
+  inquiry: String(values.get("inquiry") ?? "").trim(),
+  message: String(values.get("message") ?? "").trim(),
+  website: String(values.get("website") ?? "").trim(),
+};
+
+setIsSubmitting(true);
+setStatus("");
+
+try {
+  const response = await fetch(`${API_URL}/api/contact`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const result = (await response.json().catch(() => ({}))) as {
+    message?: string;
+  };
+
+  if (!response.ok) {
+    throw new Error(
+      result.message ||
+        "We could not send your message. Please try again.",
+    );
   }
 
-  return (
-    <main className="vozon-contact" id="contact-page">
-      <section className="contact-reference-hero">
-        <div className="contact-hero-gridlines" aria-hidden="true" />
-        <div className="contact-hero-orbit" aria-hidden="true" />
-        <div className="contact-shell contact-hero-layout">
-          <div className="contact-hero-content">
-            <span className="contact-kicker" data-ss-reveal><i />Start a conversation</span>
-            <h1 data-ss-reveal data-delay="0.08">Let’s build a better way to <em>answer every call.</em></h1>
-            <p data-ss-reveal data-delay="0.16">Tell us what your customers need, how your team works, and where a voice agent could help. We’ll turn that context into a practical rollout plan.</p>
-            <div className="contact-hero-actions" data-ss-reveal data-delay="0.24">
-              <a href="#contact-form">Plan your workflow <span aria-hidden="true">↓</span></a>
-              <a href="mailto:hello@vozon.ai">Email us directly <span aria-hidden="true">↗</span></a>
-            </div>
-            <nav aria-label="Breadcrumb" data-ss-reveal data-delay="0.3"><Link href="/">Home</Link><i>/</i><span>Contact</span></nav>
-          </div>
+  form.reset();
 
-          <div className="contact-hero-console ss-parallax-area" data-ss-reveal data-x="56" data-duration="0.9" aria-label="Vozon project planning flow">
-            <header><span><i />Project brief</span><em>Ready</em></header>
-            <div className="contact-console-core">
-              <div className="contact-console-wave" aria-hidden="true">{Array.from({ length: 19 }, (_, index) => <i key={index} />)}</div>
-              <small>Tell us about your calls</small>
-              <strong>From first idea to a production-ready workflow.</strong>
-            </div>
-            <div className="contact-console-steps">
-              <p><i>01</i><span><b>Share the use case</b><small>Call type, volume, and customer need</small></span><em>Context</em></p>
-              <p><i>02</i><span><b>Map the workflow</b><small>Knowledge, tools, actions, and handoffs</small></span><em>Design</em></p>
-              <p><i>03</i><span><b>Plan the rollout</b><small>Testing, launch, and improvement</small></span><em>Build</em></p>
-            </div>
-            <footer><span>Voice</span><span>Integrations</span><span>Operations</span></footer>
-          </div>
-        </div>
-      </section>
-
-      <section className="contact-motion-ribbon" aria-label="Ways to work with Vozon"><div>{["Voice agents", "Enterprise rollout", "White-label partners", "Connected workflows", "Voice agents", "Enterprise rollout", "White-label partners", "Connected workflows"].map((item, index) => <span aria-hidden={index > 3 || undefined} key={`${item}-${index}`}><i />{item}</span>)}</div></section>
-
-      <section className="contact-reference-main" id="contact-form">
-        <div className="contact-shell">
-          <div className="contact-section-heading" data-ss-reveal>
-            <div><span>Contact Vozon</span><h2>Bring us the call. We’ll help shape the system around it.</h2></div>
-            <p>Share as much context as you have today. Our team can help clarify the workflow, integrations, language needs, controls, and next practical step.</p>
-          </div>
-          <div className="contact-reference-grid">
-            <aside className="contact-info-stack" data-ss-reveal-group="" data-y="34" aria-label="Contact information">
-              {cards.map((card) => (
-                <a href={card.href} key={card.title} target={card.type === "address" ? "_blank" : undefined} rel={card.type === "address" ? "noreferrer" : undefined}>
-                  <ContactIcon type={card.type} />
-                  <h2>{card.title}</h2>
-                  {card.lines.map((line) => <p key={line}>{line}</p>)}
-                </a>
-              ))}
-            </aside>
-
-            <form aria-busy={isSubmitting} className="contact-reference-form" data-ss-reveal="" data-x="42" onSubmit={handleSubmit}>
-              <div className="contact-field-row">
-                <label><span>Your Name</span><input aria-label="Your Name" name="name" placeholder="Your Name" required /></label>
-                <label><span>Phone Number</span><input aria-label="Phone Number" inputMode="tel" name="phone" placeholder="Phone Number" ref={phoneInputRef} /></label>
-              </div>
-              <label><span>Your Email</span><input aria-label="Your Email" name="email" placeholder="Your Email" required type="email" /></label>
-              <label><span>Subject</span><input aria-label="Subject" name="subject" placeholder="Subject" required /></label>
-              <label><span>Write a Message</span><textarea aria-label="Write a Message" name="message" placeholder="Write a Message" required /></label>
-              <label className="contact-consent"><input required type="checkbox" /><span>I agree that Vozon may contact me about this enquiry.</span></label>
-              <label className="contact-honeypot" aria-hidden="true">Website<input autoComplete="off" name="website" tabIndex={-1} /></label>
-              <button disabled={isSubmitting} type="submit">{isSubmitting ? "Sending…" : "Submit"}</button>
-              <p aria-live="polite" className="contact-form-status">{status}</p>
-            </form>
-          </div>
-
-          <div className="contact-map" data-ss-reveal="" data-y="34">
-            <iframe allowFullScreen aria-label="Vozon Bangalore office map" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=77.55%2C13.02%2C77.65%2C13.08&layer=mapnik&marker=13.048%2C77.621" title="Vozon Bangalore office" />
-          </div>
-        </div>
-      </section>
-    </main>
+  setStatus(
+    result.message ||
+      "Thanks — your message has been sent to our sales team.",
   );
+} catch (error) {
+  setStatus(
+    error instanceof Error
+      ? error.message
+      : `We could not send your message. Please email ${salesEmail} directly.`,
+  );
+} finally {
+  setIsSubmitting(false);
+}
+
+
+}
+
+return ( <div id="contact-page" className="overflow-hidden bg-white text-black"> <section className="relative bg-white px-5 pb-16 pt-28 sm:px-8 sm:pt-32 lg:min-h-screen lg:px-12 lg:pb-14 lg:pt-24"> <div className="relative mx-auto max-w-[1240px]"> <nav
+         aria-label="Breadcrumb"
+         className="mb-7 flex items-center gap-2 text-xs font-medium text-black lg:mb-5"
+       > <Link className="transition hover:text-black" href="/">
+Home </Link>
+
+
+        <span aria-hidden="true">/</span>
+
+        <span className="text-black">Contact</span>
+      </nav>
+
+      <div className="grid gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:items-start xl:gap-20">
+        <div className="lg:sticky lg:top-32">
+          <span className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-black">
+            <span
+              className="size-1.5 rounded-full bg-teal-500"
+              aria-hidden="true"
+            />
+            Get in touch
+          </span>
+
+          <h1 className="mt-7 text-[clamp(2.5rem,4.5vw,4.5rem)] font-medium leading-[1.02] tracking-[-0.045em]">
+            <span className="block">Let&apos;s start a</span>
+            <span className="block text-black">conversation.</span>
+          </h1>
+
+          <p className="mt-6 max-w-lg text-sm leading-6 text-black sm:text-base sm:leading-7">
+            Tell us about your voice AI goals or plans to offer the
+            platform under your own brand. We&apos;ll help you understand
+            the right workflow, integrations, and rollout.
+          </p>
+
+          <ul className="mt-8 flex list-disc flex-wrap gap-x-7 gap-y-2 pl-5 text-sm font-medium text-black marker:text-teal-600">
+            {["Fast response", "Secure by design", "Dedicated guidance"].map(
+              (label) => (
+                <li key={label}>{label}</li>
+              ),
+            )}
+          </ul>
+
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link
+              className="contact-primary-button inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border px-6 text-sm font-bold shadow-sm transition hover:-translate-y-0.5"
+              href="#contact-form"
+            >
+              Send a message
+            </Link>
+
+            <a
+              className="contact-secondary-button inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border px-6 text-sm font-bold shadow-sm transition"
+              href={`mailto:${salesEmail}`}
+            >
+              <Icon className="size-4" name="email" />
+              Email
+            </a>
+          </div>
+
+          <div className="mt-5 border-l-2 border-teal-500 pl-4 text-base leading-7 text-slate-600 sm:text-lg">
+            <p className="font-semibold text-slate-900">
+              VOZON AI TECHNOLOGIES PRIVATE LIMITED
+            </p>
+            <p>CIN: U62099KA2026PTC228147</p>
+          </div>
+        </div>
+
+        <form
+          aria-busy={isSubmitting}
+          className="scroll-mt-24 rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_28px_80px_rgba(15,23,42,0.10)] sm:p-7 lg:translate-x-8 lg:p-6 xl:translate-x-12"
+          id="contact-form"
+          onSubmit={handleSubmit}
+        >
+          <div className="mb-6 flex items-center gap-4 border-b border-slate-200 pb-5 lg:mb-5 lg:pb-4">
+            <span className="grid size-13 shrink-0 place-items-center rounded-2xl border border-teal-200 bg-teal-50 shadow-[0_12px_30px_rgba(17,135,120,0.14)] lg:size-11 lg:rounded-xl">
+              <Icon className="size-6 text-[#118778]" name="send" />
+            </span>
+
+            <div>
+              <h2 className="text-xl font-semibold tracking-[-0.025em] sm:text-2xl">
+                Send us a message
+              </h2>
+
+              <p className="mt-1 text-sm text-black">
+                We&apos;ll reply as soon as possible.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:gap-3">
+            <label className="grid gap-2 text-sm font-semibold text-black lg:gap-1.5">
+              <span>
+                First name{" "}
+                <span aria-hidden="true" className="text-red-500">
+                  *
+                </span>
+                <span className="sr-only"> (required)</span>
+              </span>
+
+              <input
+                className="contact-form-field min-h-12 rounded-xl border px-4 font-normal text-black placeholder:text-slate-400 focus:outline-none lg:min-h-11"
+                name="firstName"
+                placeholder="First name"
+                required
+              />
+            </label>
+
+            <label className="grid gap-2 text-sm font-semibold text-black lg:gap-1.5">
+              <span>
+                Last name{" "}
+                <span aria-hidden="true" className="text-red-500">
+                  *
+                </span>
+                <span className="sr-only"> (required)</span>
+              </span>
+
+              <input
+                className="contact-form-field min-h-12 rounded-xl border px-4 font-normal text-black placeholder:text-slate-400 focus:outline-none lg:min-h-11"
+                name="lastName"
+                placeholder="Last name"
+                required
+              />
+            </label>
+
+            <label className="grid gap-2 text-sm font-semibold text-black lg:gap-1.5">
+              <span>
+                Work email{" "}
+                <span aria-hidden="true" className="text-red-500">
+                  *
+                </span>
+                <span className="sr-only"> (required)</span>
+              </span>
+
+              <input
+                autoComplete="email"
+                className="contact-form-field min-h-12 rounded-xl border px-4 font-normal text-black placeholder:text-slate-400 focus:outline-none lg:min-h-11"
+                name="email"
+                placeholder="you@company.com"
+                required
+                type="email"
+              />
+            </label>
+
+            <label className="grid gap-2 text-sm font-semibold text-black lg:gap-1.5">
+              Phone number{" "}
+
+              <input
+                autoComplete="tel"
+                className="contact-form-field min-h-12 rounded-xl border px-4 font-normal text-black placeholder:text-slate-400 focus:outline-none lg:min-h-11"
+                inputMode="numeric"
+                maxLength={15}
+                minLength={10}
+                name="phone"
+                onInput={(event) => {
+                  event.currentTarget.value =
+                    event.currentTarget.value.replace(/\D/g, "");
+                }}
+                pattern="[0-9]{10,15}"
+                placeholder="9876543210"
+                title="Enter a phone number containing 10 to 15 digits"
+                type="tel"
+                ref={phoneInputRef}
+              />
+            </label>
+
+            <label className="grid gap-2 text-sm font-semibold text-black lg:gap-1.5">
+              <span>
+                Company{" "}
+                <span aria-hidden="true" className="text-red-500">
+                  *
+                </span>
+                <span className="sr-only"> (required)</span>
+              </span>
+
+              <input
+                autoComplete="organization"
+                className="contact-form-field min-h-12 rounded-xl border px-4 font-normal text-black placeholder:text-slate-400 focus:outline-none lg:min-h-11"
+                name="company"
+                placeholder="Your company"
+                required
+              />
+            </label>
+
+            <label className="grid gap-2 text-sm font-semibold text-black lg:gap-1.5">
+              <span>
+                Inquiry type{" "}
+                <span aria-hidden="true" className="text-red-500">
+                  *
+                </span>
+                <span className="sr-only"> (required)</span>
+              </span>
+
+              <select
+                className="contact-form-field min-h-12 rounded-xl border px-4 font-normal text-black focus:outline-none lg:min-h-11"
+                defaultValue=""
+                name="inquiry"
+                required
+              >
+                <option disabled value="">
+                  Select an option
+                </option>
+
+                <option>Product demo</option>
+                <option>Enterprise rollout</option>
+                <option>Pricing and plans</option>
+                <option>White-label partnership</option>
+                <option>Partnership</option>
+                <option>Other</option>
+              </select>
+            </label>
+          </div>
+
+          <label className="mt-4 grid gap-2 text-sm font-semibold text-black lg:mt-3 lg:gap-1.5">
+            <span>
+              Message{" "}
+              <span aria-hidden="true" className="text-red-500">
+                *
+              </span>
+              <span className="sr-only"> (required)</span>
+            </span>
+
+            <textarea
+              className="contact-form-field min-h-32 resize-y rounded-xl border px-4 py-3 font-normal leading-6 text-black placeholder:text-slate-400 focus:outline-none lg:min-h-24"
+              name="message"
+              placeholder="Tell us about your needs..."
+              required
+            />
+          </label>
+
+          <label
+            aria-hidden="true"
+            className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
+          >
+            Website
+
+            <input
+              autoComplete="off"
+              name="website"
+              tabIndex={-1}
+            />
+          </label>
+
+          <button
+            className="contact-submit-button mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-xl border px-6 text-sm font-bold shadow-sm transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-65 disabled:hover:translate-y-0 lg:mt-4 lg:min-h-11"
+            disabled={isSubmitting}
+            type="submit"
+          >
+            {isSubmitting ? "Sending message..." : "Send message"}
+          </button>
+
+          <p className="mt-4 text-center text-xs leading-5 text-black">
+            Your message will be sent securely to {salesEmail}. By
+            continuing, you agree to our{" "}
+            <Link
+              className="font-medium text-black hover:underline"
+              href="/resources/trust-center"
+            >
+              privacy practices
+            </Link>
+            .
+          </p>
+
+          <p
+            aria-live="polite"
+            className="mt-2 min-h-5 text-center text-xs font-medium text-black"
+          >
+            {status}
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section
+    className="contact-channels-section border-t border-slate-100 bg-white px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
+    id="contact-channels"
+  >
+    <div className="mx-auto max-w-[1240px]">
+      <div className="mx-auto max-w-3xl text-center">
+        <span className="contact-channels-pill inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.17em] text-black">
+          <Icon className="size-4" name="chat" />
+          Multiple ways to reach us
+        </span>
+
+        <h2 className="mt-6 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[1.04] tracking-[-0.045em]">
+          Choose the right channel.
+        </h2>
+
+        <p className="mt-5 text-base leading-7 text-black sm:text-lg">
+          Whether you&apos;re exploring voice AI or already building with
+          vozon.ai, we&apos;ll point you to the right next step.
+        </p>
+      </div>
+
+      <div className="mt-12 grid auto-rows-fr gap-5 md:grid-cols-2 xl:grid-cols-4">
+        {contactChannels.map((channel) => (
+          <a
+            className="contact-channel-card group flex h-full min-h-72 flex-col rounded-[24px] border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-teal-300 hover:shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8"
+            href={channel.href}
+            key={channel.title}
+          >
+            <span className="contact-channel-icon grid size-13 place-items-center rounded-2xl bg-teal-50 text-black ring-1 ring-inset ring-teal-200 transition group-hover:bg-teal-500 group-hover:text-black">
+              <Icon className="size-6" name={channel.icon} />
+            </span>
+
+            <span className="contact-channel-eyebrow mt-8 text-[10px] font-bold uppercase tracking-[0.16em] text-black">
+              {channel.eyebrow}
+            </span>
+
+            <h3 className="mt-2 text-xl font-semibold tracking-[-0.025em]">
+              {channel.title}
+            </h3>
+
+            <p className="mt-3 text-sm leading-6 text-black">
+              {channel.body}
+            </p>
+
+            <span className="contact-channel-action mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-black transition group-hover:text-black">
+              {channel.action}
+
+              <Icon
+                className="size-4 transition group-hover:translate-x-1"
+                name="arrow"
+              />
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section
+    className="scroll-mt-24 border-t border-slate-100 bg-slate-50 px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-20"
+    id="office-locations"
+  >
+    <div className="mx-auto max-w-[1240px]">
+      <div className="max-w-3xl text-left">
+        <p className="text-xs font-bold uppercase tracking-[0.17em] text-black">
+          Where to find us
+        </p>
+
+        <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[1.04] tracking-[-0.045em]">
+          Our Office Locations
+        </h2>
+      </div>
+
+      <div className="mt-10 grid auto-rows-fr gap-5 sm:mt-12 lg:grid-cols-3">
+        {officeLocations.map((office) => (
+          <article
+            className="contact-channel-card group flex h-full min-h-64 flex-col rounded-[24px] border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-teal-300 hover:shadow-[0_20px_50px_rgba(15,23,42,0.08)] sm:p-8"
+            key={office.city}
+          >
+            <span className="contact-channel-icon grid size-13 place-items-center rounded-2xl bg-teal-50 text-black ring-1 ring-inset ring-teal-200 transition group-hover:bg-teal-500 group-hover:text-black">
+              <Icon className="size-6" name="location" />
+            </span>
+
+            <span className="contact-channel-eyebrow mt-8 text-[10px] font-bold uppercase tracking-[0.16em] text-black">
+              {office.label}
+            </span>
+
+            <h3 className="mt-2 text-xl font-semibold tracking-[-0.025em]">
+              {office.city}
+            </h3>
+
+            <address className="mt-3 text-sm font-medium not-italic leading-6 text-black">
+              {office.address}
+            </address>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section className="border-t border-slate-100 bg-white px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-20">
+    <div className="mx-auto max-w-[1240px]">
+      <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.17em] text-black">
+            What happens next
+          </p>
+
+          <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[1.04] tracking-[-0.045em]">
+            From first message to a clear plan.
+          </h2>
+        </div>
+
+        <div className="grid gap-4">
+          {nextSteps.map((step) => (
+            <article
+              className="grid gap-4 rounded-[22px] border border-slate-200 bg-white p-6 shadow-sm sm:grid-cols-[52px_1fr] sm:items-start sm:p-7"
+              key={step.number}
+            >
+              <span className="grid size-11 place-items-center rounded-xl border border-teal-200 bg-teal-50 text-xs font-bold text-black">
+                {step.number}
+              </span>
+
+              <div>
+                <h3 className="text-lg font-semibold tracking-[-0.02em]">
+                  {step.title}
+                </h3>
+
+                <p className="mt-2 text-sm leading-6 text-black">
+                  {step.body}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>{`
+    #contact-page .contact-primary-button {
+      border-color: #118778 !important;
+      background: #118778 !important;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+
+    #contact-page .contact-primary-button:hover {
+      border-color: #0e6f62 !important;
+      background: #0e6f62 !important;
+    }
+
+    /* TEAL SECONDARY EMAIL BUTTON */
+    #contact-page .contact-secondary-button {
+      border-color: #9bd8d1 !important;
+      background: #eaf8f6 !important;
+      color: #08786e !important;
+      -webkit-text-fill-color: #08786e !important;
+    }
+
+    #contact-page .contact-secondary-button:hover {
+      border-color: #70c7bd !important;
+      background: #d9f2ef !important;
+      color: #075f58 !important;
+      -webkit-text-fill-color: #075f58 !important;
+    }
+
+    /*
+     * Form fields:
+     * Subtle off-white background so the fields are visible
+     * against the white form card without looking too bright.
+     */
+    #contact-page .contact-form-field {
+      border-color: #e2e4e9 !important;
+      background: #f8f8fa !important;
+      color: #111827 !important;
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.02) !important;
+      transition:
+        border-color 160ms ease,
+        background-color 160ms ease,
+        box-shadow 160ms ease;
+    }
+
+    #contact-page .contact-form-field:hover {
+      border-color: #d6d8df !important;
+      background: #f7f7f9 !important;
+    }
+
+    /* TEAL FORM FOCUS */
+    #contact-page .contact-form-field:focus {
+      border-color: #108d82 !important;
+      background: #fcfffe !important;
+      box-shadow:
+        0 0 0 3px rgba(16, 141, 130, 0.13),
+        inset 0 1px 2px rgba(15, 23, 42, 0.02) !important;
+      outline: none !important;
+    }
+
+    #contact-page .contact-form-field::placeholder {
+      color: #64748b !important;
+      opacity: 0.38 !important;
+    }
+
+    #contact-page select.contact-form-field {
+      color: #111827 !important;
+    }
+
+    #contact-page select.contact-form-field:invalid {
+      color: #9ca3af !important;
+    }
+
+    #contact-page select.contact-form-field option {
+      color: #111827 !important;
+      background: #ffffff !important;
+    }
+
+    /* TEAL SUBMIT BUTTON */
+    #contact-page .contact-submit-button {
+      border-color: #118778 !important;
+      background: #118778 !important;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+
+    #contact-page .contact-submit-button:hover {
+      border-color: #0e6f62 !important;
+      background: #0e6f62 !important;
+    }
+
+    #contact-page .contact-primary-button *,
+    #contact-page .contact-submit-button * {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+  `}</style>
+</div>
+
+);
 }

@@ -12,7 +12,7 @@ const capabilities = [
 
 const benefits = [
   ["0.8s", "Average response"],
-  ["Live", "Connected workspace"],
+  ["24/7", "Always available"],
   ["99.9%", "Platform uptime"],
 ];
 

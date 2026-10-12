@@ -770,8 +770,8 @@
 }
 .design-four-footer-main nav {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: 1.35fr 1.1fr .9fr 1.25fr;
+  gap: 30px;
 }
 
 .design-four-footer-main nav > div { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
@@ -1123,72 +1123,6 @@
   .design-four-security-row { padding-right: 0; padding-left: 0; }
   .design-four-footer-cta { padding-right: 16px; padding-left: 16px; }
   .design-four-footer-main { padding-right: 16px; padding-left: 16px; }
-}
-
-/* Compact, edge-to-edge footer with horizontal page navigation. */
-.design-four-footer {
-  min-height: 0;
-  background: #08080e;
-}
-
-.design-four-footer-main {
-  grid-template-columns: minmax(250px, 340px) minmax(0, 1fr);
-  gap: clamp(40px, 6vw, 100px);
-  padding: clamp(46px, 5vw, 78px) clamp(20px, 4vw, 72px) 38px;
-}
-
-.design-four-footer-main nav {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.design-four-footer-main nav > div {
-  display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
-  gap: 18px;
-  align-items: start;
-}
-
-.design-four-footer-main nav b {
-  margin: 2px 0 0;
-  color: #fff;
-  font-size: 15px;
-}
-
-.design-four-footer-main nav > div > span {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 22px;
-}
-
-.design-four-footer-main nav a {
-  color: #858b98;
-  font-size: 13px;
-  line-height: 1.45;
-  white-space: nowrap;
-}
-
-@media (max-width: 980px) {
-  .design-four-footer-main {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 640px) {
-  .design-four-footer-main {
-    gap: 38px;
-    padding: 46px 16px 30px;
-  }
-
-  .design-four-footer-main nav > div {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-
-  .design-four-footer-main nav > div > span {
-    gap: 7px 16px;
-  }
 }
 
 /* Keep the vertical rhythm compact and consistent between page sections. */

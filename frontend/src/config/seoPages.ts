@@ -30,8 +30,8 @@ export const commercialPages: SeoPage[] = [
     slug: "ai-receptionist",
     kicker: "AI Receptionist",
     title: "AI Receptionist",
-    description: "Use an AI receptionist to answer calls, take messages, route callers, schedule appointments, and cover front-desk overflow.",
-    highlights: ["Configured call answering", "Smart routing and messages", "Calendar booking"],
+    description: "Use a 24/7 AI receptionist to answer calls, take messages, route callers, schedule appointments, and cover front-desk overflow.",
+    highlights: ["24/7 call answering", "Smart routing and messages", "Calendar booking"],
     sections: [
       { title: "A helpful first response", body: "Welcome every caller with a consistent business greeting, understand why they called, and guide them to the right answer, person, or next step without forcing them through a rigid phone tree." },
       { title: "Cover after-hours and overflow calls", body: "Keep important opportunities from reaching voicemail when the front desk is busy or closed. Capture names, contact details, urgency, and requested services for fast follow-up." },

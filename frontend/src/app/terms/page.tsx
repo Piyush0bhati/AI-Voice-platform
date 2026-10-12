@@ -434,14 +434,14 @@ const sections = [
 
 export default function TermsPage() {
   return (
-    <SiteLayout>
-      <div className="relative isolate min-h-screen !bg-white text-[#14231f]" id="terms-page">
+    <SiteLayout showFooter={false}>
+      <div className="relative isolate min-h-screen !bg-white text-[#14231f]">
         {/* =========================================================
              HERO / DOCUMENT HEADER
          ========================================================= */}
         <header className="relative z-10 px-5 pb-8 pt-20 sm:px-8 sm:pb-10 sm:pt-24 lg:px-12 lg:pb-12 lg:pt-28">
           <div className="mx-auto grid w-full max-w-[1690px] gap-8 lg:grid-cols-[minmax(0,1fr)_560px] lg:items-center">
-            <div data-ss-reveal-group="" data-y="38">
+            <div>
               <nav
                 aria-label="Breadcrumb"
                 className="flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#5E6E88]"
@@ -467,7 +467,7 @@ export default function TermsPage() {
                 Vozon Platform Agreement
               </p>
 
-              <h1 className="ss-text-reveal-blur mt-4 max-w-[850px] text-5xl font-semibold leading-[0.98] tracking-[-0.055em] text-[#101B32] sm:text-6xl md:text-7xl lg:text-[68px]">
+              <h1 className="mt-4 max-w-[850px] text-5xl font-semibold leading-[0.98] tracking-[-0.055em] text-[#101B32] sm:text-6xl md:text-7xl lg:text-[68px]">
                 Terms &amp; Conditions
               </h1>
 
@@ -478,7 +478,7 @@ export default function TermsPage() {
               </p>
             </div>
 
-            <div className="w-full max-w-[560px] justify-self-end overflow-hidden rounded-xl border border-[#DCE8E5] bg-white/70 px-6 py-2 shadow-[0_18px_50px_rgba(16,141,130,0.08)] backdrop-blur-[12px]" data-ss-reveal="" data-x="45">
+            <div className="w-full max-w-[560px] justify-self-end overflow-hidden rounded-xl border border-[#DCE8E5] bg-white/70 px-6 py-2 shadow-[0_18px_50px_rgba(16,141,130,0.08)] backdrop-blur-[12px]">
               <dl className="divide-y divide-[#E2EBE8]">
                 {/* DOCUMENT */}
                 <div className="flex min-h-[72px] items-center justify-between gap-5">
@@ -586,7 +586,7 @@ export default function TermsPage() {
           {/* =======================================================
               MAIN AGREEMENT CARD (Glassmorphic Container)
           ======================================================== */}
-          <article className="relative min-w-0 overflow-hidden rounded-2xl border border-[#DCE8E5] bg-white/70 shadow-[0_18px_50px_rgba(16,141,130,0.06)] backdrop-blur-[12px]" data-ss-reveal="" data-y="34">
+          <article className="relative min-w-0 overflow-hidden rounded-2xl border border-[#DCE8E5] bg-white/70 shadow-[0_18px_50px_rgba(16,141,130,0.06)] backdrop-blur-[12px]">
             {/* DOCUMENT HEADER */}
             <header className="flex flex-col gap-6 px-6 py-7 sm:flex-row sm:items-end sm:justify-between sm:px-10 sm:py-9">
               <div>

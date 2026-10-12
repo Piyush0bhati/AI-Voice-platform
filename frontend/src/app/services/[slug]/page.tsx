@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { ProductDetailPage } from "@/components/layout/ProductDetailPage";
+import { VoiceAgentsProductPageV2 } from "@/components/product/VoiceAgentsProductPageV2";
 import { productServiceExperiences } from "@/config/productServiceExperiences";
 import { servicePages } from "@/config/site";
 
@@ -40,6 +41,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
   if (!service || !experience) {
     notFound();
+  }
+
+  if (slug === "voice-agents") {
+    return <VoiceAgentsProductPageV2 />;
   }
 
   return <ProductDetailPage experience={experience} service={service} />;

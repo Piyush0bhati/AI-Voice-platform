@@ -1,349 +1,436 @@
-"use client";
-
-import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
+
+import { ProductServiceHeroPhoto } from "@/components/layout/ProductServiceHeroPhoto";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { servicePages } from "@/config/site";
 
-export function ProductOverviewPage() {
-  const [selectedCategory, setSelectedCategory] = useState<"all" | "build" | "deploy" | "monitor">("all");
-  const [activeStepTab, setActiveStepTab] = useState(0);
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
+const productStages = [
+  {
+    key: "Build",
+    eyebrow: "Design the conversation",
+    title: "Build agents around the way your business works.",
+    description:
+      "Shape the voice, knowledge, behavior, and boundaries for every caller journey from one focused workspace.",
+  },
+  {
+    key: "Deploy",
+    eyebrow: "Connect every action",
+    title: "Move from a tested agent to live calls with confidence.",
+    description:
+      "Connect phone numbers, business tools, team workflows, and real-time actions without rebuilding your existing stack.",
+  },
+  {
+    key: "Monitor",
+    eyebrow: "Improve with evidence",
+    title: "See what happened on every call—and what to improve next.",
+    description:
+      "Turn conversations into searchable outcomes, quality signals, and clear follow-up work for your team.",
+  },
+] as const;
 
-  const productCategoryMap: Record<string, "build" | "deploy" | "monitor"> = {
-    "voice-agents": "build",
-    "voice-cloning": "build",
-    "realtime-tts": "build",
-    "multilingual-speech": "build",
-    "api-access": "deploy",
-    "team-workflows": "deploy",
-    "speech-analytics": "deploy",
-    "sentiment-detection": "monitor",
-    "conversation-insights": "monitor",
-    "quality-controls": "monitor",
-  };
+const stageAccents = [
+  {
+    number: "text-[#75fff0] border-[#45ddce]/30 bg-[#45ddce]/10",
+    line: "from-[#45ddce]",
+  },
+  {
+    number: "text-[#c6bdff] border-[#8f83e8]/30 bg-[#8f83e8]/10",
+    line: "from-[#8f83e8]",
+  },
+  {
+    number: "text-[#ffbd8c] border-[#f28d45]/30 bg-[#f28d45]/10",
+    line: "from-[#f28d45]",
+  },
+] as const;
 
-  const productColors: Record<string, string> = {
-    "voice-agents": "#0d776e",
-    "voice-cloning": "#F8A85E",
-    "realtime-tts": "#979BFF",
-    "multilingual-speech": "#7BE1A4",
-    "api-access": "#DE5EF8",
-    "team-workflows": "#E1DE7B",
-    "speech-analytics": "#FF97B1",
-    "sentiment-detection": "#20c997",
-    "conversation-insights": "#0dcaf0",
-    "quality-controls": "#6f42c1",
-  };
+function ArrowIcon() {
+  return (
+    <svg aria-hidden="true" className="size-4" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" viewBox="0 0 24 24">
+      <path d="M5 12h14M14 7l5 5-5 5" />
+    </svg>
+  );
+}
 
-  const filteredServices = servicePages.filter((service) => {
-    if (selectedCategory === "all") return true;
-    return productCategoryMap[service.slug] === selectedCategory;
-  });
+function ProductGlyph({ type }: { type: "voice" | "workflow" | "signal" }) {
+  if (type === "voice") {
+    return (
+      <svg aria-hidden="true" className="size-5" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" viewBox="0 0 24 24">
+        <path d="M5 9v6M9 6v12M13 3v18M17 7v10M21 10v4" />
+      </svg>
+    );
+  }
 
-  const stepTabs = [
-    {
-      title: "One account, total access.",
-      desc: "Configure the agent instructions, knowledge, and telephony rules in one workspace.",
-      img: "/img/content/features/feature-step-1.webp",
-    },
-    {
-      title: "Select the agent to deploy.",
-      desc: "Deploy autonomous voice agents tailored for customer service, appointment booking, or inbound triage.",
-      img: "/img/content/features/feature-step-2.webp",
-    },
-    {
-      title: "Enter a prompt or automate.",
-      desc: "Connect your phone line or website embed, initiate live conversations, and monitor transcripts in real-time.",
-      img: "/img/content/features/feature-step-3.webp",
-    },
-  ];
-
-  const productFaqs = [
-    {
-      q: "Can I connect our existing phone numbers and SIP trunks?",
-      a: "Vozon supports configured telephony providers and SIP-based routes. Availability and migration requirements depend on the provider and current setup.",
-    },
-    {
-      q: "What is the end-to-end voice latency in production?",
-      a: "End-to-end response time depends on the selected telephony, transcription, language, and voice providers. Test the complete stack with representative calls before launch.",
-    },
-    {
-      q: "How does tool calling and database lookup work during calls?",
-      a: "Agents can query webhooks, CRMs (HubSpot, Salesforce), and calendars live during conversations, executing verified business actions before hanging up.",
-    },
-    {
-      q: "Is patient and client data protected by compliance standards?",
-      a: "Vozon provides configurable access, workflow, and review controls. Confirm security, privacy, and regulatory requirements for your specific deployment with our team before launch.",
-    },
-  ];
+  if (type === "workflow") {
+    return (
+      <svg aria-hidden="true" className="size-5" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" viewBox="0 0 24 24">
+        <rect height="6" rx="2" width="7" x="2" y="3" />
+        <rect height="6" rx="2" width="7" x="15" y="15" />
+        <path d="M9 6h4a4 4 0 0 1 4 4v5M15 18h-4a4 4 0 0 1-4-4V9" />
+      </svg>
+    );
+  }
 
   return (
-    <SiteLayout>
-      <main className="arsly-products-page" id="products-overview-page">
-        {/* Page Header */}
-        <section className="page-header bg-light position-relative pb-6 pb-xl-15 pt-25 pt-md-25 pt-xl-40 overflow-hidden">
-          <div className="grid-pattern"></div>
-          <div className="overlay"></div>
-          <Image
-            alt="Decorative circle shape"
-            width={1200}
-            height={762}
-            className="circle-shape position-absolute top-50 end-0 translate-middle-y"
-            src="/img/shapes/circle-shape.svg"
-            priority
-          />
-          <div className="container position-relative z-2">
-            <div className="row">
-              <div className="col-xl-8 col-xxl-6">
-                <h2 className="section-title ss-text-reveal-blur">Our Products</h2>
-                <div className="mb-4"></div>
-                <p className="fs-md text-muted" data-ss-reveal="" data-y="50">
-                  Build conversation flows, connect a voice and telephony stack, and review call outcomes from one workspace.
-                </p>
-                <div className="mb-8 mb-xl-12"></div>
-                <nav aria-label="breadcrumb" data-ss-reveal="true" data-y="50">
-                  <ol className="breadcrumb">
-                    <li className="breadcrumb-item">
-                      <Link className="animated-link" href="/">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="icon" fill="currentColor" viewBox="0 0 21 18">
-                          <path d="M7.4 18a1 1 0 0 0 1-1v-4.353a1 1 0 0 1 1-1h2.2a1 1 0 0 1 1 1V17a1 1 0 0 0 1 1h3.25a1 1 0 0 0 1-1v-6.593c0-.485.393-.878.877-.878.803 0 1.184-.988.59-1.527L11.172.61a1 1 0 0 0-1.344 0L1.683 8.002c-.594.54-.213 1.527.59 1.527.484 0 .877.393.877.878V17a1 1 0 0 0 1 1H7.4Z"></path>
-                        </svg>
-                        Home
-                      </Link>
-                    </li>
-                    <li className="breadcrumb-item active" aria-current="page">
-                      Our Products
-                    </li>
-                  </ol>
-                </nav>
+    <svg aria-hidden="true" className="size-5" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" viewBox="0 0 24 24">
+      <path d="M4 19V9M10 19V5M16 19v-7M22 19V3" />
+      <path d="m3 7 6-4 6 6 7-7" />
+    </svg>
+  );
+}
+
+// Kept temporarily for the existing console styling below.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function HeroConsole() {
+  return (
+    <div className="relative mx-auto w-full max-w-[720px]">
+      <div className="overflow-hidden rounded-[22px] border border-white/12 bg-[#06110f] shadow-[0_36px_100px_rgba(0,0,0,0.52)]">
+        <div className="flex h-11 items-center justify-between border-b border-white/[0.08] bg-white/[0.025] px-4">
+          <div className="flex gap-1.5" aria-hidden="true">
+            <span className="size-2 rounded-full bg-[#ff786c]" />
+            <span className="size-2 rounded-full bg-[#f4ca55]" />
+            <span className="size-2 rounded-full bg-[#57d99a]" />
+          </div>
+          <span className="text-[9px] font-black uppercase tracking-[0.16em] text-white/35">Vozon agent studio</span>
+          <span className="flex items-center gap-1.5 text-[9px] font-black text-[#75fff0]">
+            <span className="size-1.5 rounded-full bg-[#45ddce] shadow-[0_0_8px_#45ddce]" /> Live
+          </span>
+        </div>
+
+        <div className="grid min-h-[430px] sm:grid-cols-[150px_minmax(0,1fr)]">
+          <aside className="hidden border-r border-white/[0.07] bg-black/20 p-3 sm:block">
+            <div className="mb-5 flex items-center gap-2 px-2 py-2">
+              <span className="grid size-7 place-items-center rounded-lg bg-[#45ddce] text-[10px] font-black text-[#03110e]">V</span>
+              <span className="text-[11px] font-black text-white/85">Nova Reception</span>
+            </div>
+            {[
+              ["Agent", true],
+              ["Knowledge", false],
+              ["Functions", false],
+              ["Phone", false],
+              ["Testing", false],
+            ].map(([label, active]) => (
+              <div className={`mt-1 rounded-lg px-3 py-2.5 text-[10px] font-bold ${active ? "bg-[#45ddce]/10 text-[#8afff2]" : "text-white/35"}`} key={String(label)}>
+                {label}
+              </div>
+            ))}
+          </aside>
+
+          <div className="relative overflow-hidden p-4 sm:p-5">
+            <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(69,221,206,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(69,221,206,0.08)_1px,transparent_1px)] [background-size:30px_30px]" />
+            <div className="relative flex items-center justify-between gap-3">
+              <div>
+                <strong className="block text-sm text-white">Inbound appointment agent</strong>
+                <span className="mt-1 block text-[9px] text-white/38">Production workflow · Published</span>
+              </div>
+              <button className="rounded-lg border border-[#45ddce]/30 bg-[#45ddce]/10 px-3 py-2 text-[9px] font-black text-[#8afff2]" type="button">
+                Test agent
+              </button>
+            </div>
+
+            <div className="relative mt-7 grid gap-3 md:grid-cols-[1fr_168px]">
+              <div className="relative min-h-[285px] rounded-xl border border-white/[0.08] bg-black/25 p-4">
+                <div className="absolute left-[33px] top-[55px] h-[165px] w-px bg-gradient-to-b from-[#45ddce]/70 via-[#45ddce]/30 to-[#8f83e8]/60" />
+                {[
+                  ["01", "Welcome caller", "Natural greeting + intent"],
+                  ["02", "Check availability", "Calendar function"],
+                  ["03", "Confirm next step", "Book or warm transfer"],
+                ].map(([number, title, meta], index) => (
+                  <div className={`relative flex items-center gap-3 rounded-xl border px-3 py-3 ${index === 1 ? "ml-5 border-[#8f83e8]/28 bg-[#8f83e8]/[0.08]" : "border-[#45ddce]/20 bg-[#45ddce]/[0.055]"} ${index > 0 ? "mt-4" : ""}`} key={title}>
+                    <span className={`relative z-10 grid size-8 shrink-0 place-items-center rounded-lg text-[9px] font-black ${index === 1 ? "bg-[#8f83e8] text-white" : "bg-[#45ddce] text-[#03110e]"}`}>{number}</span>
+                    <div className="min-w-0">
+                      <strong className="block truncate text-[11px] text-white/90">{title}</strong>
+                      <span className="mt-1 block truncate text-[8px] text-white/35">{meta}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="rounded-xl border border-white/[0.09] bg-[#0a1815]/95 p-3">
+                <div className="flex items-center justify-between border-b border-white/[0.07] pb-3">
+                  <span className="text-[9px] font-black text-white/70">Live test call</span>
+                  <span className="font-mono text-[8px] text-[#75fff0]">00:38</span>
+                </div>
+                <div className="mt-3 rounded-lg bg-white/[0.04] p-2.5 text-[8px] leading-4 text-white/45">
+                  <strong className="block text-[#75fff0]">Agent</strong>
+                  How can I help with your appointment today?
+                </div>
+                <div className="mt-2 rounded-lg bg-[#8f83e8]/10 p-2.5 text-[8px] leading-4 text-white/45">
+                  <strong className="block text-[#c6bdff]">Caller</strong>
+                  I need to move it to Friday afternoon.
+                </div>
+                <div className="mt-5 flex h-9 items-center justify-center gap-1" aria-label="Live voice activity">
+                  {[9, 19, 13, 25, 16, 29, 12, 22, 8].map((height, index) => (
+                    <span className="w-1 rounded-full bg-[#45ddce]" key={index} style={{ height }} />
+                  ))}
+                </div>
+                <div className="mt-4 rounded-lg border border-[#45ddce]/18 bg-[#45ddce]/[0.06] px-2 py-2 text-center text-[8px] font-bold text-[#75fff0]">
+                  Calendar checked · 3 slots found
+                </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-        {/* Product Directory Section */}
-        <section className="py-15 py-md-20 py-lg-30 position-relative">
-          <div className="container">
-            <div className="row align-items-end justify-content-between g-6 g-lg-10 mb-10 mb-lg-16">
-              <div className="col-lg-7" data-ss-reveal-group="true" data-y="50">
-                <div className="bg-white border rounded-2 shadow-sm d-inline-flex align-items-center gap-3 px-5 py-2 lh-sm text-center fw-semibold text-dark mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-5 h-5 text-primary" viewBox="0 0 20 20">
-                    <path d="M4.45 9.974c2.4-3.858 5.277-7.142 9.53-9.032.715 2.713 2.41 4.406 5.137 5.076-.21.596-.493 1.149-.798 1.69-.772 1.369-1.742 2.587-2.845 3.703-1.601 1.619-3.41 2.972-5.398 4.167-.324-.324-.637-.67-.987-.975-.292-.252-.375-.486-.228-.87.178-.464.191-.966.05-1.458a1.69 1.69 0 0 0-1.527-1.251 3.04 3.04 0 0 0-1.343.179c-.188.07-.307.044-.446-.098-.362-.373-.738-.732-1.146-1.131m11.348-2.853a2.897 2.897 0 0 0-2.934-2.914 2.924 2.924 0 0 0-2.916 2.904c-.012 1.606 1.308 2.935 2.926 2.944 1.611.008 2.925-1.31 2.924-2.934"></path>
-                  </svg>
-                  Voice Architecture
-                </div>
-                <h2 className="ss-text-reveal-blur mb-0">Everything your voice operation needs.</h2>
+function StageVisual({ index }: { index: number }) {
+  if (index === 0) {
+    return (
+      <div className="relative min-h-[390px] overflow-hidden rounded-[22px] border border-[#dce5ff] bg-[#f4f7ff] p-5 shadow-[0_18px_48px_rgba(17,135,120,0.08)] sm:p-7">
+        <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_center,rgba(69,221,206,0.13)_1px,transparent_1px)] [background-size:20px_20px]" />
+        <div className="relative flex items-center justify-between">
+          <span className="text-xs font-black text-[#17203f]">Conversation canvas</span>
+          <span className="rounded-full border border-[#118778]/20 bg-white px-3 py-1.5 text-[9px] font-bold text-[#118778]">Auto-saved</span>
+        </div>
+        <div className="relative mx-auto mt-10 max-w-md">
+          <div className="absolute left-8 top-12 h-[190px] w-px bg-gradient-to-b from-[#45ddce] via-[#45ddce]/30 to-[#8f83e8]" />
+          {[
+            ["Greeting", "Understand intent and caller context"],
+            ["Business knowledge", "Use approved answers and live data"],
+            ["Take action", "Book, update, notify, or transfer"],
+          ].map(([title, body], itemIndex) => (
+            <div className={`relative flex gap-4 rounded-2xl border bg-white p-4 shadow-[0_8px_24px_rgba(38,52,102,0.05)] ${itemIndex === 1 ? "ml-12 border-[#118778]/25" : "border-[#118778]/20"} ${itemIndex > 0 ? "mt-5" : ""}`} key={title}>
+              <span className={`relative z-10 grid size-9 shrink-0 place-items-center rounded-xl text-[10px] font-black ${itemIndex === 1 ? "bg-[#8f83e8]" : "bg-[#45ddce] text-[#03110e]"}`}>0{itemIndex + 1}</span>
+              <div><strong className="text-sm text-[#17203f]">{title}</strong><p className="mb-0 mt-1 text-[11px] leading-5 text-[#5d6478]">{body}</p></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (index === 1) {
+    return (
+      <div className="product-deployment-card relative min-h-[390px] overflow-hidden rounded-[22px] border border-[#e3defb] bg-[#f7f5ff] p-5 sm:p-7">
+        <div className="relative flex items-center justify-between border-b border-white/[0.08] pb-5">
+          <div><span className="text-xs font-black text-[#17203f]">Deployment center</span><span className="mt-1 block text-[9px] text-[#5d6478]">All production channels</span></div>
+          <span className="text-[9px] font-bold text-[#667085]">Healthy</span>
+        </div>
+        <div className="relative mt-5 grid gap-3 sm:grid-cols-2">
+          {[
+            ["Phone numbers", "+1 (415) 555-0182", "Connected"],
+            ["CRM workflow", "HubSpot contacts", "Syncing"],
+            ["Calendar action", "Live availability", "Ready"],
+            ["Human handoff", "Support queue", "Ready"],
+          ].map(([title, detail, status], itemIndex) => (
+            <div className="rounded-2xl border border-[#e3defb] bg-white p-4 shadow-[0_8px_24px_rgba(55,46,120,0.05)]" key={title}>
+              <div className="flex items-center justify-between"><span className="product-deployment-icon grid size-9 place-items-center rounded-xl bg-[#8f83e8]/14 text-[#c6bdff]"><ProductGlyph type={itemIndex % 2 ? "workflow" : "voice"} /></span><span className="product-deployment-status rounded-full bg-emerald-300/10 px-2 py-1 text-[8px] font-bold text-emerald-300">{status}</span></div>
+              <strong className="mt-5 block text-sm text-[#17203f]">{title}</strong>
+              <span className="mt-1 block text-[10px] text-[#5d6478]">{detail}</span>
+            </div>
+          ))}
+        </div>
+        <div className="product-deployment-summary relative mt-4 flex items-center justify-between rounded-xl border border-[#8f83e8]/20 bg-[#8f83e8]/[0.07] px-4 py-3">
+          <span className="text-[10px] font-bold text-[#5d6478]">Production agent</span><span className="product-deployment-deployed rounded-lg bg-[#118778] px-3 py-2 text-[9px] font-black text-white">Deployed</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative min-h-[390px] overflow-hidden rounded-[22px] border border-[#f4dfcf] bg-[#fff7f1] p-5 shadow-[0_18px_48px_rgba(233,130,58,0.08)] sm:p-7">
+      <div className="relative flex items-center justify-between"><div><span className="text-xs font-black text-[#17203f]">Call intelligence</span><span className="mt-1 block text-[9px] text-[#5d6478]">Last 7 days</span></div><span className="rounded-lg border border-[#f4dfcf] bg-white px-3 py-2 text-[9px] text-[#5d6478]">All agents</span></div>
+      <div className="relative mt-5 grid grid-cols-3 gap-2.5">
+        {[["1,284", "Calls"], ["91%", "Resolved"], ["4.7", "Quality"]].map(([value, label]) => (
+          <div className="rounded-xl border border-[#f4dfcf] bg-white p-3 shadow-[0_7px_20px_rgba(120,68,30,0.045)] sm:p-4" key={label}><strong className="block text-lg text-[#17203f] sm:text-2xl">{value}</strong><span className="mt-1 block text-[8px] text-[#5d6478] sm:text-[9px]">{label}</span></div>
+        ))}
+      </div>
+      <div className="relative mt-3 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-4">
+        <div className="flex h-28 items-end gap-2">
+          {[38, 56, 45, 72, 63, 88, 77, 94, 71, 84].map((height, index) => (
+            <span className={`flex-1 rounded-t-sm ${index > 6 ? "bg-[#f28d45]" : "bg-[#f28d45]/35"}`} key={index} style={{ height: `${height}%` }} />
+          ))}
+        </div>
+        <div className="mt-3 flex justify-between text-[8px] text-white/25"><span>Mon</span><span>Wed</span><span>Fri</span><span>Sun</span></div>
+      </div>
+      <div className="relative mt-3 grid gap-2 sm:grid-cols-2">
+        {["Appointment intent increased", "Support handoffs improved"].map((signal, index) => (
+          <div className="flex items-center gap-3 rounded-xl border border-[#f28d45]/14 bg-[#f28d45]/[0.045] p-3" key={signal}><span className="grid size-8 shrink-0 place-items-center rounded-lg bg-[#f28d45]/12 text-[#ffbd8c]"><ProductGlyph type="signal" /></span><span className="text-[10px] font-bold leading-4 text-white/55">{signal}</span><span className="ml-auto text-[9px] font-black text-emerald-300">+{index ? 8 : 14}%</span></div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function ProductOverviewPage() {
+  return (
+    <SiteLayout>
+      <div className="product-overview-page overflow-hidden bg-white text-[#17203f]" id="product-overview-page">
+        <section className="product-overview-hero relative border-b border-[#e2e8e5] px-5 pb-8 pt-20 sm:px-8 sm:pb-10 sm:pt-24 lg:pb-12 lg:pt-24">
+          <div className="relative mx-auto grid max-w-[1280px] items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#45ddce]/22 bg-[#45ddce]/[0.07] px-4 py-2 text-[10px] font-black uppercase tracking-[0.17em] text-[#75fff0]">
+                <span className="size-1.5 rounded-full bg-[#45ddce] shadow-[0_0_10px_#45ddce]" /> Vozon product platform
               </div>
-
-              {/* Category Filter Pills */}
-              <div className="col-lg-5 text-lg-end" data-ss-reveal-group="true" data-y="50">
-                <div className="d-inline-flex bg-light border p-1 rounded-pill">
-                  {(["all", "build", "deploy", "monitor"] as const).map((cat) => (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => setSelectedCategory(cat)}
-                      className={`btn btn-sm rounded-pill px-4 py-2 text-capitalize fw-semibold border-0 transition-base ${
-                        selectedCategory === cat ? "btn-dark text-white shadow-sm" : "btn-light text-muted"
-                      }`}
-                    >
-                      {cat === "all" ? "All Products" : cat}
-                    </button>
-                  ))}
-                </div>
+              <h1 className="product-hero-title m-0 mt-6 text-[clamp(1.85rem,3.8vw,3.25rem)] font-medium leading-[0.98] tracking-[-0.05em] text-[#7a3e9d]">
+                Every voice workflow, <span className="product-overview-heading-accent block text-[#7a3e9d]" id="product-overview-heading-accent">one platform.</span>
+              </h1>
+              <p className="mb-0 mt-6 max-w-xl text-base leading-7 text-[#5d6478]">
+                Build natural AI phone agents, connect them to real business actions, and improve every conversation from one production-ready workspace.
+              </p>
+              <div className="mt-9 flex flex-wrap gap-3">
+                <Link className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[#45ddce] px-6 text-sm font-black text-[#03110e] shadow-[0_18px_48px_rgba(69,221,206,0.2)] transition hover:-translate-y-0.5 hover:bg-[#75fff0]" href="/dashboard">Start building <ArrowIcon /></Link>
+                <Link className="inline-flex min-h-12 items-center rounded-full border border-white/14 bg-white/[0.045] px-6 text-sm font-black text-white transition hover:border-[#45ddce]/35 hover:bg-[#45ddce]/[0.07]" href="/contact" id="product-overview-secondary-cta">Talk to our team</Link>
+              </div>
+              <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-[11px] font-bold text-white/38">
+                {["Natural real-time voice", "Business tool actions", "Human handoff controls"].map((item) => (
+                  <span className="flex items-center gap-2" key={item}><span className="text-[#45ddce]">✓</span>{item}</span>
+                ))}
               </div>
             </div>
+            <ProductServiceHeroPhoto slug="product-overview" title="Voice agent platform" />
+          </div>
+        </section>
 
-            {/* Arsly Tilt-Card Grid for Products */}
-            <div className="row g-6 g-xl-8" data-ss-reveal-group="true" data-stagger="0.1" data-y="50">
-              {filteredServices.map((service, index) => {
-                const category = productCategoryMap[service.slug] ?? "build";
-                const iconColor = productColors[service.slug] ?? "#0d776e";
+        <section className="product-overview-proof-strip border-b border-[#e2e8e5] px-5 sm:px-8">
+          <div className="mx-auto grid max-w-[1280px] sm:grid-cols-2 lg:grid-cols-4">
+            {[["<500ms", "responsive conversations"], ["140+", "supported languages"], ["24/7", "inbound and outbound"], ["One", "connected workspace"]].map(([value, label], index) => (
+              <div className="border-b border-[#e2e8e5] px-4 py-6 last:border-b-0 sm:border-r sm:px-6 sm:py-7 sm:[&:nth-child(2)]:border-r-0 sm:[&:nth-child(n+3)]:border-b-0 lg:border-b-0 lg:[&:nth-child(2)]:border-r lg:last:border-r-0" key={label}>
+                <strong className={`block text-2xl font-black tracking-[-0.025em] ${index === 1 ? "text-[#6d5fc5]" : index === 2 ? "text-[#c8672d]" : "text-[#0e7568]"}`}>{value}</strong>
+                <span className="mt-1.5 block text-xs font-medium text-[#60706a]">{label}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="px-5 py-10 sm:px-8 sm:py-12 lg:py-14">
+          <div className="mx-auto max-w-[1280px]">
+            <div className="mx-auto max-w-[680px] text-center">
+              <p className="m-0 text-[10px] font-black uppercase tracking-[0.2em] text-[#75fff0]">The complete operating layer</p>
+              <h2 className="m-0 mt-4 text-[clamp(1.9rem,3.6vw,3.25rem)] font-semibold leading-[1.08] tracking-[-0.03em]">From first prompt to every live outcome.</h2>
+              <p className="mx-auto mb-0 mt-5 max-w-xl text-sm leading-7 text-white/48 sm:text-base">Design the experience, connect the workflow, and learn from real calls without stitching together disconnected tools.</p>
+            </div>
+
+            <div className="mt-10 space-y-14 lg:mt-12 lg:space-y-16">
+              {productStages.map((stage, stageIndex) => {
+                const services = servicePages.filter((service) => service.kicker === stage.key);
+                const accent = stageAccents[stageIndex];
                 return (
-                  <div className="col-md-6 col-xl-4" key={service.slug}>
-                    <div className="tilt-card h-full" data-tilt="" data-tilt-speed="0.3" data-tilt-max="4">
-                      <div className="bg-white bg-light-2-hover border shadow-sm transition-base rounded-5 overflow-hidden h-full p-6 p-xl-8 d-flex flex-column justify-content-between">
-                        <div>
-                          <div className="d-flex align-items-center justify-content-between mb-6">
-                            <div
-                              className="w-14 h-14 rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm"
-                              style={{ backgroundColor: iconColor }}
-                            >
-                              <span className="fs-md">{String(index + 1).padStart(2, "0")}</span>
-                            </div>
-                            <span className="badge bg-light border text-dark text-uppercase px-3 py-1.5 rounded-pill fs-xs fw-bold">
-                              {category}
-                            </span>
-                          </div>
-
-                          <h4 className="mb-2 fw-bold text-dark">
-                            <Link className="text-decoration-none text-dark" href={`/services/${service.slug}`}>
-                              {service.title}
-                            </Link>
-                          </h4>
-                          <p className="text-muted fs-sm mb-5 lh-base">{service.summary}</p>
-
-                          <ul className="list-unstyled d-grid gap-2.5 mb-6 fs-xs text-muted">
-                            {service.highlights.slice(0, 3).map((hl) => (
-                              <li className="d-flex align-items-center gap-2" key={hl}>
-                                <span className="text-primary fw-bold">✓</span>
-                                <span>{hl}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        <div className="pt-4 border-top">
-                          <Link
-                            className="btn btn-outline-dark btn-sm rounded-pill px-4 w-100 d-flex align-items-center justify-content-between text-decoration-none"
-                            href={`/services/${service.slug}`}
-                          >
-                            <span>Explore Product</span>
-                            <span className="fs-md ms-2">↗</span>
+                  <article className="relative grid items-center gap-12 lg:grid-cols-2 lg:gap-20" key={stage.key}>
+                    <div className={stageIndex % 2 ? "lg:order-2" : ""}>
+                      <div className="flex items-center gap-3">
+                        <span className={`grid size-10 place-items-center rounded-xl border text-xs font-black ${accent.number}`}>0{stageIndex + 1}</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.17em] text-white/38">{stage.eyebrow}</span>
+                      </div>
+                      <h2 className="m-0 mt-5 max-w-lg text-2xl font-semibold leading-[1.14] tracking-[-0.025em] sm:text-3xl lg:text-[2.25rem]">{stage.title}</h2>
+                      <p className="mb-0 mt-5 max-w-xl text-sm leading-7 text-white/48 sm:text-base">{stage.description}</p>
+                      <div className="mt-8 grid gap-2">
+                        {services.map((service) => (
+                          <Link className="group flex items-center gap-4 rounded-xl border border-white/[0.08] bg-white/[0.025] px-4 py-3.5 transition hover:border-white/16 hover:bg-white/[0.05]" href={`/services/${service.slug}`} key={service.slug}>
+                            <span className={`h-8 w-0.5 rounded-full bg-gradient-to-b ${accent.line} to-transparent`} />
+                            <span className="min-w-0 flex-1"><strong className="block text-sm text-white/88">{service.title}</strong><span className="mt-1 block truncate text-[10px] text-white/32">{service.highlights[0]}</span></span>
+                            <span className="text-white/25 transition group-hover:translate-x-1 group-hover:text-white/70"><ArrowIcon /></span>
                           </Link>
-                        </div>
+                        ))}
                       </div>
                     </div>
-                  </div>
+                    <div className={stageIndex % 2 ? "lg:order-1" : ""}><StageVisual index={stageIndex} /></div>
+                  </article>
                 );
               })}
             </div>
           </div>
         </section>
 
-        {/* Three Steps Showcase Section */}
-        <section className="py-15 py-md-20 py-lg-30 bg-light border-top border-bottom position-relative">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-8 col-xxl-6 mx-auto text-center mb-10 mb-lg-15" data-ss-reveal-group="" data-y="50">
-                <div className="bg-white border rounded-2 shadow-sm d-inline-flex align-items-center gap-3 px-5 py-2 lh-sm text-center fw-semibold text-dark mb-4">
-                  Steps to use
-                </div>
-                <h2 className="ss-text-reveal-blur mb-3">
-                  Three Simple Steps to <span className="text-primary">Get Started.</span>
-                </h2>
-                <p className="text-muted fs-md">
-                  Deploy fully capable autonomous voice agents into your production phone stack in under fifteen minutes.
-                </p>
-              </div>
+        <section className="border-y border-white/[0.07] bg-[#050b09] px-5 py-10 sm:px-8 sm:py-12 lg:py-14">
+          <div className="mx-auto max-w-[1180px]">
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+              <div><p className="m-0 text-[10px] font-black uppercase tracking-[0.18em] text-[#75fff0]">One continuous system</p><h2 className="m-0 mt-4 text-2xl font-semibold leading-[1.15] sm:text-3xl">A call becomes completed work.</h2></div>
+              <p className="m-0 max-w-2xl text-sm leading-7 text-white/45 lg:justify-self-end">Vozon carries context from the first hello through reasoning, action, handoff, and reporting—so every team sees the same outcome.</p>
             </div>
-
-            <div className="row align-items-center flex-lg-row-reverse g-10">
-              <div className="col-lg-6 offset-xxl-1" data-ss-reveal="true" data-x="-50">
-                <div className="position-relative overflow-hidden rounded-5 shadow-lg border bg-white p-3">
-                  <Image
-                    alt={stepTabs[activeStepTab].title}
-                    width={625}
-                    height={404}
-                    className="img-fluid rounded-4 object-fit-cover w-100"
-                    src={stepTabs[activeStepTab].img}
-                  />
-                </div>
-              </div>
-
-              <div className="col-lg-6 col-xxl-5">
-                <div className="vstack gap-4">
-                  {stepTabs.map((step, idx) => {
-                    const isActive = activeStepTab === idx;
-                    return (
-                      <div
-                        key={step.title}
-                        onClick={() => setActiveStepTab(idx)}
-                        className={`p-5 rounded-4 border transition-base cursor-pointer ${
-                          isActive ? "bg-white border-primary shadow-sm" : "bg-transparent border-transparent"
-                        }`}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <div className="d-flex align-items-center gap-3 mb-2">
-                          <div
-                            className={`w-8 h-8 rounded-circle d-flex align-items-center justify-content-center fs-xs fw-bold ${
-                              isActive ? "bg-primary text-white" : "bg-light text-muted border"
-                            }`}
-                          >
-                            0{idx + 1}
-                          </div>
-                          <h5 className={`mb-0 fw-bold ${isActive ? "text-dark" : "text-muted"}`}>
-                            {step.title}
-                          </h5>
-                        </div>
-                        <p className="mb-0 text-muted fs-sm ps-11 lh-base">{step.desc}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+            <div className="mt-12 grid overflow-hidden rounded-2xl border border-white/[0.09] md:grid-cols-4">
+              {[["01", "Understand", "Intent, language, and urgency"], ["02", "Respond", "Natural, grounded conversation"], ["03", "Act", "Bookings, updates, and routing"], ["04", "Learn", "Outcomes, quality, and trends"]].map(([number, title, body], index) => (
+                <div className="relative border-b border-white/[0.08] bg-white/[0.025] p-6 last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0" key={number}><span className={`text-[10px] font-black ${index === 1 ? "text-[#c6bdff]" : index === 2 ? "text-[#ffbd8c]" : "text-[#75fff0]"}`}>{number}</span><strong className="mt-8 block text-lg">{title}</strong><p className="mb-0 mt-2 text-xs leading-5 text-white/36">{body}</p></div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className="py-15 py-md-20 py-lg-30 position-relative">
-          <div className="container">
-            <div className="bg-light p-6 p-lg-10 p-xxl-20 rounded-5 overflow-hidden position-relative border">
-              <div className="row justify-content-center g-10 align-items-start">
-                <div className="col-lg-5">
-                  <div className="text-center text-lg-start" data-ss-reveal-group="" data-y="50">
-                    <div className="bg-white border rounded-2 shadow-sm d-inline-flex align-items-center gap-3 px-5 py-2 lh-sm text-center fw-semibold text-dark mb-4">
-                      Architecture & FAQ
-                    </div>
-                    <h2 className="ss-text-reveal-blur mb-4">Frequently asked questions.</h2>
-                    <p className="fs-md text-muted mb-6">
-                      Have questions about telephony carriers, speech models, or embedding voice capabilities?
-                    </p>
-                    <Link className="btn btn-outline-dark rounded-pill px-5 py-2.5" href="/contact">
-                      Talk with an Engineer
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="col-lg-7">
-                  <div className="accordion d-grid gap-4">
-                    {productFaqs.map((faq, index) => {
-                      const isOpen = openFaq === index;
-                      return (
-                        <div
-                          className={`accordion-item bg-white shadow-sm rounded-4 ${isOpen ? "active" : ""}`}
-                          key={faq.q}
-                        >
-                          <h3 className="accordion-header m-0">
-                            <button
-                              type="button"
-                              className="accordion-button"
-                              onClick={() => setOpenFaq(isOpen ? null : index)}
-                              aria-expanded={isOpen}
-                            >
-                              <span>{faq.q}</span>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2.5"
-                                className="icon ms-3"
-                                viewBox="0 0 24 24"
-                              >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"></path>
-                              </svg>
-                            </button>
-                          </h3>
-                          {isOpen && (
-                            <div className="accordion-collapse">
-                              <div className="accordion-body text-muted pt-0 pb-4 px-4 fs-sm lh-base">
-                                {faq.a}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
+        <section className="px-5 py-10 sm:px-8 sm:py-12 lg:py-14">
+          <div className="product-overview-ready-card relative mx-auto max-w-[900px] overflow-hidden rounded-[24px] border p-7 text-center sm:p-9 lg:p-10">
+            <div className="absolute left-1/2 top-0 h-0.5 w-28 -translate-x-1/2 bg-[#118778]" />
+            <p className="m-0 text-[10px] font-black uppercase tracking-[0.18em] text-[#75fff0]">Ready when your callers are</p>
+            <h2 className="mx-auto m-0 mt-4 max-w-xl text-2xl font-semibold leading-[1.15] sm:text-3xl">Launch your first production voice workflow.</h2>
+            <p className="mx-auto mb-0 mt-4 max-w-xl text-sm leading-6 text-white/52 sm:text-base">Start with one high-value call journey, connect the actions it needs, and expand from real results.</p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3"><Link className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#45ddce] px-5 text-sm font-bold text-[#03110e]" href="/dashboard">Start building <ArrowIcon /></Link><Link className="product-overview-contact-button inline-flex min-h-11 items-center rounded-full border border-white/14 bg-black/20 px-5 text-sm font-bold text-white" href="/contact">Contact sales</Link></div>
           </div>
         </section>
-      </main>
+      </div>
+      <style>{`
+        #product-overview-page#product-overview-page h1,
+        #product-overview-page#product-overview-page h1 * {
+          color: var(--product-hero-heading) !important;
+          -webkit-text-fill-color: var(--product-hero-heading) !important;
+        }
+
+        #product-overview-page#product-overview-page h2,
+        #product-overview-page#product-overview-page h2 * {
+          color: #123d35 !important;
+          -webkit-text-fill-color: #123d35 !important;
+        }
+
+        #product-overview-page#product-overview-page,
+        #product-overview-page#product-overview-page > section {
+          background: #fff !important;
+          background-image: none !important;
+        }
+
+        #product-overview-page#product-overview-page > .product-overview-hero {
+          background: linear-gradient(180deg, #f8fbfa 0%, #ffffff 68%) !important;
+        }
+
+        #product-overview-page#product-overview-page > .product-overview-proof-strip {
+          background: #f7f9f8 !important;
+        }
+
+        #product-overview-page#product-overview-page article a,
+        #product-overview-page#product-overview-page section:nth-of-type(4) [class*="grid"] > div,
+        #product-overview-page#product-overview-page [class*="rounded-[22px]"] {
+          border-color: #e1e5ec !important;
+          background: #fff !important;
+          background-image: none !important;
+          box-shadow: none !important;
+        }
+
+        #product-overview-page#product-overview-page article a:hover {
+          border-color: #c8ced9 !important;
+          box-shadow: none !important;
+        }
+
+        #product-overview-page#product-overview-page#product-overview-page .product-deployment-card,
+        #product-overview-page#product-overview-page#product-overview-page .product-deployment-card > div > div {
+          border-color: #e1e5ec !important;
+          background: #fff !important;
+          background-image: none !important;
+          box-shadow: none !important;
+        }
+
+        #product-overview-page#product-overview-page#product-overview-page .product-deployment-icon,
+        #product-overview-page#product-overview-page#product-overview-page .product-deployment-status,
+        #product-overview-page#product-overview-page#product-overview-page .product-deployment-summary {
+          border-color: #e1e5ec !important;
+          background: #f5f6f8 !important;
+          background-image: none !important;
+          color: #5d6478 !important;
+          -webkit-text-fill-color: #5d6478 !important;
+        }
+
+        #product-overview-page#product-overview-page#product-overview-page .product-deployment-deployed {
+          background: #252a35 !important;
+          background-image: none !important;
+          color: #fff !important;
+          -webkit-text-fill-color: #fff !important;
+        }
+
+        #product-overview-page#product-overview-page#product-overview-page .product-overview-ready-card {
+          border-color: #dce5ff !important;
+          background: #f7f9ff !important;
+          background-image: none !important;
+          box-shadow: none !important;
+        }
+      `}</style>
     </SiteLayout>
   );
 }
