@@ -245,7 +245,7 @@ function StepMiniVisual({ index, onVoicePreview, onExploreLanguages }: { index: 
         </div>
 
         <div className="design-four-card-tools">
-          <span><WorkflowIcon name="chip" /><small>750ms&gt;</small></span>
+          <span><WorkflowIcon name="chip" /><small>&gt;750ms</small></span>
           <span><WorkflowIcon name="server" /><small>LiveKit WebRTC</small></span>
           <span><WorkflowIcon name="sparkles" /><small>Dual Pipeline</small></span>
         </div>
@@ -322,7 +322,7 @@ function StepMiniVisual({ index, onVoicePreview, onExploreLanguages }: { index: 
           </div>
           <div className="voice-spec-row">
             <span className="v-label">Speech to Text</span>
-            <span className="v-val">Deepgram Nova-2 (750ms&gt;)</span>
+            <span className="v-val">Deepgram Nova-2 (&gt;750ms)</span>
           </div>
         </div>
 
@@ -456,7 +456,7 @@ export function HomeDesignFour() {
             <div className="vozon-hero-trust-bar">
               <div className="vozon-trust-item">
                 <span className="vozon-trust-icon">⚡</span>
-                <span><strong>750ms&gt;</strong> Telephony Latency</span>
+                <span><strong>&gt;750ms</strong> Telephony Latency</span>
               </div>
               <div className="vozon-trust-sep" />
               <div className="vozon-trust-item">
@@ -569,7 +569,7 @@ export function HomeDesignFour() {
               <div className="vozon-card-badge">Zero Friction</div>
               <div className="vozon-card-icon">⚡</div>
               <h3>Sheets to Enterprise MCP</h3>
-              <p>No developers needed: paste a Google Sheet to launch outbound dialer campaigns in 60 seconds. For engineers, we provide India&apos;s only Model Context Protocol (MCP) server &amp; 750ms&gt; WebRTC.</p>
+              <p>No developers needed: paste a Google Sheet to launch outbound dialer campaigns in 60 seconds. For engineers, we provide India&apos;s only Model Context Protocol (MCP) server &amp; &gt;750ms WebRTC.</p>
               <div className="vozon-feature-checks">
                 <span>✓ Google Sheets auto-sync</span>
                 <span>✓ Bi-directional CRM webhooks</span>
@@ -673,7 +673,7 @@ export function HomeDesignFour() {
           <div className="design-four-metrics">
             <div><strong>1 Lakh+</strong><span>daily calling minutes</span></div>
             <div><strong>75%+</strong><span>first-call resolution rate</span></div>
-            <div><strong>750ms&gt;</strong><span>telephony voice latency</span></div>
+            <div><strong>&gt;750ms</strong><span>telephony voice latency</span></div>
             <div><strong>22+</strong><span>Indic &amp; global languages</span></div>
             <div><strong>99.9%</strong><span>enterprise uptime</span></div>
           </div>
