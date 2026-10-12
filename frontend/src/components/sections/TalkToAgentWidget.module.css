@@ -617,3 +617,50 @@
   border-radius: 99px;
   margin: 7px auto 0;
 }
+
+.landingVariant { color: #fff; overflow: visible; }
+.landingVariant .phoneTopBar { color: #fff; text-shadow: 0 1px 4px rgba(58, 12, 56, .25); }
+.landingVariant .dynamicIsland { background: #17121b; border-color: rgba(255, 255, 255, .28); box-shadow: none; }
+.landingVariant .brandName { background: none; color: #fff; text-shadow: 0 1px 5px rgba(48, 10, 50, .25); }
+.landingVariant .liveTag { border-color: rgba(255, 255, 255, .45); background: rgba(255, 255, 255, .2); color: #fff; backdrop-filter: blur(8px); }
+.landingVariant .deviceHeader { margin-top: 1px; margin-bottom: 7px; }
+.landingVariant .deviceTitle { color: #fff; font-size: 14px; text-shadow: 0 1px 7px rgba(65, 10, 55, .32); }
+.landingVariant .deviceSubtitle { color: rgba(255, 255, 255, .88); font-size: 9px; }
+.landingVariant .personaBanner { display: none; border-color: #c9e4dd; background: #eef9f5; box-shadow: none; }
+.landingVariant .personaAvatar { border-color: #8bcabd; background: #fff; }
+.landingVariant .avatarOnlineDot { border-color: #eef9f5; }
+.landingVariant .personaName { color: #142c26; }
+.landingVariant .personaRole { color: #08796b; }
+.landingVariant .personaFemaleBadge { color: #55736b; background: #fff; }
+.landingVariant .fieldLabel { color: rgba(255, 255, 255, .92); text-shadow: 0 1px 4px rgba(65, 10, 55, .3); }
+.landingVariant .scenarioButton,
+.landingVariant .countryBtn,
+.landingVariant .phoneField,
+.landingVariant .textInput { border-color: rgba(255, 255, 255, .58); background: rgba(255, 255, 255, .9); color: #302033; box-shadow: 0 5px 18px rgba(74, 11, 70, .1); }
+.landingVariant .scenarioButton { padding: 6px 8px; font-size: 11px; }
+.landingVariant .textInput { padding: 6px 8px; font-size: 10.5px; }
+.landingVariant .countryBtn { padding: 6px 5px; font-size: 9px; }
+.landingVariant .countryDigits { font-size: 9px; }
+.landingVariant .phoneField { padding: 6px 7px; font-size: 10px; }
+.landingVariant .scenarioButton:hover,
+.landingVariant .countryBtn:hover { border-color: #fff; background: #fff; }
+.landingVariant .dropdownChevron { color: #6e4768; }
+.landingVariant .scenarioDropdown,
+.landingVariant .countryDropdown { border-color: #b8dcd3; background: #fff; box-shadow: 0 18px 35px rgba(20, 70, 60, .18); }
+.landingVariant .scenarioItem,
+.landingVariant .countryItem { color: #405c55; }
+.landingVariant .scenarioItem:hover,
+.landingVariant .countryItem:hover,
+.landingVariant .scenarioItemSelected { background: #e9f7f3; color: #08796b; }
+.landingVariant .scenarioItemPersona { color: #789089; }
+.landingVariant .phoneField::placeholder,
+.landingVariant .textInput::placeholder { color: #9e839b; }
+.landingVariant .callerIdNote { color: rgba(255, 255, 255, .82); text-shadow: 0 1px 4px rgba(68, 11, 58, .35); }
+.landingVariant .callerIdNote strong { color: #fff; }
+.landingVariant .homeBar { background: rgba(255, 255, 255, .72); }
+.landingVariant .landingOptionalField { display: none; }
+.landingVariant .formContainer { gap: 6px; }
+.landingVariant .initiateButton { margin-top: 3px; padding: 7px; background: #121014; color: #fff; font-size: 10px; box-shadow: 0 5px 18px rgba(54, 8, 47, .24); }
+.landingVariant .initiateButton:hover:not(:disabled) { background: #2a1728; box-shadow: 0 7px 20px rgba(54, 8, 47, .3); }
+.landingVariant .callerIdNote { font-size: 7px; }
+.landingVariant .homeBar { margin-top: 4px; }

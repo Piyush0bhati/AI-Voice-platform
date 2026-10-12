@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { SiteLayout } from "@/components/layout/SiteLayout";
+import "@/components/resources/BlogPage.css";
 
 const blogPosts = [
   {
@@ -185,6 +186,25 @@ const categories = [
   "Developers",
 ] as const;
 
+const postHrefs = [
+  "/resources/blog/how-to-build-an-ai-phone-agent",
+  "/resources/blog/ai-receptionist-vs-answering-service",
+  "/resources/blog/ai-phone-agent-implementation-checklist",
+  "/resources/blog/voice-ai-use-cases-indian-businesses",
+  "/resources/blog/ai-phone-agent-implementation-checklist",
+  "/docs/api",
+  "/resources/blog/ai-phone-agent-implementation-checklist",
+  "/docs/api",
+  "/services/voice-cloning",
+  "/resources/blog/reduce-voice-agent-latency",
+  "/resources/blog/how-to-build-an-ai-phone-agent",
+  "/resources/blog/ai-receptionist-vs-answering-service",
+  "/resources/blog/ai-phone-agent-implementation-checklist",
+  "/resources/blog/what-is-an-ai-voice-agent",
+  "/docs/api",
+  "/resources/blog/reduce-voice-agent-latency",
+] as const;
+
 export function BlogPage() {
   const [activeCategory, setActiveCategory] =
     useState<(typeof categories)[number]>("All insights");
@@ -196,217 +216,52 @@ export function BlogPage() {
 
   return (
     <SiteLayout>
-      <div className="min-h-screen bg-white text-[#111111]">
-
-        {/* HERO SECTION */}
-        <section className="relative overflow-hidden bg-white px-5 pb-16 pt-28 sm:px-8 sm:pt-32 lg:px-12 lg:pb-20 lg:pt-36">
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(16,141,130,0.055),transparent_30%)]"
-          />
-
-          <div className="relative mx-auto max-w-[1320px]">
-            <nav
-              aria-label="Breadcrumb"
-              className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-black/35"
-            >
-              <Link
-                className="transition hover:text-[#108D82]"
-                href="/"
-              >
-                Home
-              </Link>
-
-              <span aria-hidden="true">/</span>
-
-              <span className="text-[#108D82]">Blog</span>
-            </nav>
-
-            <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#108D82]">
-                  Vozon ideas
-                </p>
-
-                <h1 className="mt-4 max-w-[780px] text-4xl font-semibold leading-[1.05] tracking-[-0.045em] text-[#111111] sm:text-5xl lg:text-[58px]">
-                  Better thinking for better conversations.
-                </h1>
-              </div>
-
-              <p className="border-l border-[#108D82]/25 pl-6 text-base leading-8 text-black/55">
-                Practical guidance for teams designing, launching, and
-                improving AI voice agents in real customer workflows.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURED ARTICLE */}
-        <section className="bg-white px-5 pb-16 sm:px-8 lg:px-12 lg:pb-20">
-          <div className="mx-auto max-w-[1320px]">
-            <article className="group grid overflow-hidden rounded-2xl border border-black/[0.08] bg-white shadow-[0_18px_55px_rgba(0,0,0,0.08)] lg:grid-cols-[1.08fr_0.92fr]">
-              <div className="relative min-h-[300px] overflow-hidden lg:min-h-[450px]">
-                <Image
-                  alt="Team reviewing customer conversation insights"
-                  className="object-cover transition duration-700 group-hover:scale-[1.025]"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 58vw"
-                  src="/service-images/conversation-insights.jpg"
-                />
-
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-r from-transparent to-white/10"
-                />
-              </div>
-
-              <div className="relative flex flex-col justify-center p-7 sm:p-10 lg:p-12">
-                <span className="inline-flex w-fit rounded-full border border-[#108D82]/20 bg-[#108D82]/[0.06] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#108D82]">
-                  Featured perspective
-                </span>
-
-                <h2 className="mt-6 text-2xl font-semibold tracking-[-0.035em] text-[#111111] sm:text-3xl">
-                  Build voice agents around the conversation—not the script.
-                </h2>
-
-                <p className="mt-5 text-base leading-8 text-black/55">
-                  A strong voice workflow listens, confirms, recovers, and
-                  knows when a person should step in. Start with the caller&apos;s
-                  real path through the conversation.
-                </p>
-
-                <div className="mt-7 flex items-center gap-4 text-xs text-black/40">
-                  <span className="font-semibold text-[#108D82]">
-                    Voice AI strategy
-                  </span>
-
-                  <span
-                    aria-hidden="true"
-                    className="h-3 w-px bg-black/15"
-                  />
-
-                  <span>8 min read</span>
-                </div>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        {/* BLOG CARDS SECTION */}
-        <section className="bg-[#fafafa] px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
-          <div className="mx-auto max-w-[1320px]">
-            <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#108D82]">
-                  Latest thinking
-                </p>
-
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-[#111111] sm:text-4xl">
-                  Ideas your team can put to work.
-                </h2>
-              </div>
-
-              <div
-                className="flex flex-wrap gap-2"
-                aria-label="Blog categories"
-              >
-                {categories.map((category) => (
-                  <button
-                    aria-pressed={activeCategory === category}
-                    className={`rounded-full border px-3.5 py-2 text-xs font-semibold transition ${
-                      activeCategory === category
-                        ? "border-[#108D82]/30 bg-[#108D82]/[0.07] text-[#108D82]"
-                        : "border-black/10 bg-white text-black/45 hover:border-black/20 hover:text-black/75"
-                    }`}
-                    key={category}
-                    onClick={() => setActiveCategory(category)}
-                    type="button"
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div
-              aria-live="polite"
-              className={`mt-9 grid gap-5 sm:grid-cols-2 ${
-                activeCategory === "All insights"
-                  ? "lg:grid-cols-3"
-                  : "lg:grid-cols-2"
-              }`}
-            >
-              {visiblePosts.map((post, index) => (
-                <article
-                  className="group overflow-hidden rounded-xl border border-black/[0.08] bg-white transition duration-300 hover:-translate-y-1 hover:border-[#108D82]/25 hover:shadow-[0_18px_45px_rgba(0,0,0,0.09)]"
-                  key={post.title}
-                >
-                  <div className="relative aspect-[2/1] overflow-hidden">
-                    <Image
-                      alt={post.imageAlt}
-                      className="object-cover transition duration-500 group-hover:scale-[1.035]"
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      src={post.image}
-                    />
-
-                    <span className="absolute left-4 top-4 grid size-9 place-items-center rounded-lg border border-white/60 bg-white/90 font-mono text-[10px] text-[#108D82] shadow-sm backdrop-blur">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-
-                  <div className="p-5">
-                    <div className="flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.13em]">
-                      <span className="text-[#108D82]">
-                        {post.category}
-                      </span>
-
-                      <span className="text-black/35">
-                        {post.readTime}
-                      </span>
-                    </div>
-
-                    <h3 className="mt-4 text-xl font-semibold tracking-[-0.03em] text-[#111111]">
-                      {post.title}
-                    </h3>
-
-                    <p className="mt-3 text-sm leading-6 text-black/55">
-                      {post.summary}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA SECTION */}
-        <section className="bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
-          <div className="mx-auto flex max-w-[1120px] flex-col items-start justify-between gap-8 rounded-2xl border border-[#108D82]/15 bg-[#f8fbfa] p-7 sm:p-10 lg:flex-row lg:items-center">
+      <main className="ruboz-blog" id="blog-page">
+        <section className="ruboz-blog-hero">
+          <div className="ruboz-blog-gridlines" aria-hidden="true" />
+          <div className="ruboz-blog-orbit" aria-hidden="true" />
+          <div className="ruboz-blog-shell ruboz-blog-hero-layout">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#108D82]">
-                Build with clarity
-              </p>
-
-              <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-[#111111] sm:text-4xl">
-                Turn an idea into a working voice experience.
-              </h2>
-
-              <p className="mt-3 max-w-[650px] text-sm leading-7 text-black/55">
-                Talk with our team about your calls, workflows,
-                integrations, and rollout plan.
-              </p>
+              <span className="ruboz-blog-kicker" data-ss-reveal><i />Vozon ideas</span>
+              <h1 data-ss-reveal data-delay="0.08">Better thinking for <em>better conversations.</em></h1>
+              <p data-ss-reveal data-delay="0.16">Practical guidance for teams designing, launching, and improving AI voice agents in real customer workflows.</p>
+              <div className="ruboz-blog-actions" data-ss-reveal data-delay="0.24"><a href="#latest-insights">Explore insights <span aria-hidden="true">↓</span></a><Link href="/contact">Talk to Vozon <span aria-hidden="true">↗</span></Link></div>
+              <nav aria-label="Breadcrumb" data-ss-reveal data-delay="0.3"><Link href="/">Home</Link><i>/</i><span>Blog &amp; Insights</span></nav>
             </div>
-
-            <Link
-              className="inline-flex min-h-12 shrink-0 items-center rounded-lg bg-[#108D82] px-6 text-sm font-bold text-white transition hover:bg-[#0c756c]"
-              href="/contact"
-            >
-              Contact our team
+            <Link className="ruboz-blog-feature ss-parallax-area" href="/resources/blog/how-to-build-an-ai-phone-agent" data-ss-reveal data-x="56" data-duration="0.9">
+              <div className="ruboz-blog-feature-image"><Image alt="Team reviewing customer conversation insights" className="ss-parallax-item" data-parallax-strength="7" fill priority sizes="(max-width: 900px) 92vw, 45vw" src="/service-images/conversation-insights.jpg" /></div>
+              <div className="ruboz-blog-feature-copy"><span>Featured perspective · 8 min read</span><h2>Build voice agents around the conversation—not the script.</h2><p>Start with the caller’s real path: listen, confirm, recover, act, and know when a person should step in.</p><b>Read the guide <i aria-hidden="true">↗</i></b></div>
             </Link>
           </div>
         </section>
-      </div>
+
+        <section className="ruboz-blog-ribbon" aria-label="Resource themes"><div>{["Conversation design", "Voice operations", "Connected workflows", "Production AI", "Conversation design", "Voice operations", "Connected workflows", "Production AI"].map((item, index) => <span aria-hidden={index > 3 || undefined} key={`${item}-${index}`}><i />{item}</span>)}</div></section>
+
+        <section className="ruboz-blog-feed" id="latest-insights">
+          <div className="ruboz-blog-shell">
+            <div className="ruboz-blog-feed-heading" data-ss-reveal>
+              <div><span>Latest thinking</span><h2>Ideas your team can put to work.</h2></div>
+              <p>Choose a topic and move from broad voice AI questions to concrete decisions about experience, reliability, workflows, and measurement.</p>
+            </div>
+            <div className="ruboz-blog-filters" aria-label="Blog categories" data-ss-reveal>
+              {categories.map((category) => <button aria-pressed={activeCategory === category} key={category} onClick={() => setActiveCategory(category)} type="button">{category}</button>)}
+            </div>
+            <div className="ruboz-blog-grid" aria-live="polite" data-ss-reveal-group data-stagger="0.08">
+              {visiblePosts.map((post) => {
+                const sourceIndex = blogPosts.indexOf(post);
+                return (
+                  <Link className="ruboz-blog-card" href={postHrefs[sourceIndex] ?? "/resources/blog"} key={post.title}>
+                    <div className="ruboz-blog-card-image"><Image alt={post.imageAlt} fill sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 33vw" src={post.image} /><span>{String(sourceIndex + 1).padStart(2, "0")}</span></div>
+                    <div className="ruboz-blog-card-copy"><div><span>{post.category}</span><time>{post.readTime}</time></div><h3>{post.title}</h3><p>{post.summary}</p><b>Read article <i aria-hidden="true">↗</i></b></div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="ruboz-blog-cta"><div className="ruboz-blog-shell" data-ss-reveal><div><span>Build with clarity</span><h2>Turn an idea into a working voice experience.</h2><p>Talk with our team about your calls, workflows, integrations, and rollout plan.</p></div><Link href="/contact">Contact our team <span aria-hidden="true">↗</span></Link></div></section>
+      </main>
     </SiteLayout>
   );
 }

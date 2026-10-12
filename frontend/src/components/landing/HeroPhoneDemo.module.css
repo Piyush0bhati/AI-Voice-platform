@@ -1,0 +1,41 @@
+.preview { isolation: isolate; }
+
+.phoneOverlay {
+  position: absolute;
+  z-index: 3;
+  /* Exact display bounds measured from the 1216 × 767 source artwork. */
+  top: 23.47%;
+  left: 41.61%;
+  width: 17.93%;
+  height: 61.8%;
+  overflow: hidden;
+  border: 0;
+  border-radius: 11.5% / 5%;
+  background:
+    radial-gradient(circle at 78% 16%, rgba(55, 208, 255, .18), transparent 36%),
+    linear-gradient(165deg, rgba(34, 159, 225, .34), rgba(226, 38, 160, .42) 57%, rgba(255, 104, 15, .38));
+  padding: 11px 13px 8px 14px;
+  text-align: left;
+  box-shadow: none;
+  backdrop-filter: blur(18px) saturate(1.18);
+  -webkit-backdrop-filter: blur(18px) saturate(1.18);
+}
+
+.phoneOverlay::after {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(125deg, rgba(255, 255, 255, .1), transparent 28%, transparent 76%, rgba(255, 255, 255, .04));
+  content: "";
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .preview {
+    width: 690px;
+    max-width: none !important;
+    margin-left: 50% !important;
+    transform: translateX(-50%);
+  }
+}

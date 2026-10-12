@@ -6,8 +6,8 @@ import { useMemo, useState } from "react";
 import { VoiceStackCalculator } from "@/components/pricing/VoiceStackCalculator";
 import styles from "./PricingExperience.module.css";
 
-const MINUTE_RATE_MIN = 2;
-const MINUTE_RATE_MAX = 10;
+const MINUTE_RATE_MIN = 3;
+const MINUTE_RATE_MAX = 6;
 
 const calculatorPresets = [
   { label: "Starter", calls: 100, minutes: 2 },
@@ -27,7 +27,7 @@ const includedServices = [
 const faqs = [
   { question: "Do I need to choose a pricing plan?", answer: "No. Vozon uses one pay-as-you-go model. Add credits to your wallet and use them whenever you make calls." },
   { question: "How am I charged?", answer: "You are charged for actual usage. After each call, the cost is deducted from your wallet and shown as an itemized breakdown in your billing dashboard." },
-  { question: "Why can the per-minute cost change?", answer: "The final cost depends on the carrier destination, call duration, speech provider, AI model, and voice selected. Your dashboard shows the exact cost of every completed call." },
+  { question: "Why can the per-minute cost change?", answer: "Your exact rate depends on the model stack you choose, including the language model, speech-to-text provider, voice model, and telephony route. Your dashboard shows the exact cost of every completed call." },
   { question: "Is there a monthly fee or minimum commitment?", answer: "No. There is no recurring subscription, setup fee, or minimum monthly spend. You pay only for what you use." },
   { question: "How do wallet credits work?", answer: "Purchase credits whenever your balance is low. You can also enable auto-refill to keep calls running without manually topping up your wallet." },
   { question: "Are telephony and AI provider costs included?", answer: "Yes. The call breakdown combines platform, telephony, transcription, AI model, and voice-generation costs. Premium providers and international routes may cost more." },
@@ -89,7 +89,7 @@ export function PricingExperience() {
             <div className={styles.heroCopy}>
               <span className={styles.eyebrow}><i /> Simple, transparent pricing</span>
               <h1>Voice AI pricing<br />that scales with <em>you.</em></h1>
-              <p>One flexible pay-as-you-go model. No subscriptions, setup fees, or long-term commitments—just the voice AI you actually use.</p>
+              <p>Pay as you go from ₹3 to ₹6 per connected minute. Your exact rate depends on the model stack you choose, with no subscription or long-term commitment.</p>
               <div className={styles.heroActions}>
                 <Link className={styles.primaryButton} href="/login?mode=register">Start building free <ArrowIcon /></Link>
                 <a className={styles.secondaryButton} href="#calculator">Calculate your cost</a>
@@ -101,8 +101,8 @@ export function PricingExperience() {
 
             <div className={styles.heroCard}>
               <div className={styles.cardTopline}><span>Pay as you go</span><span className={styles.liveBadge}><i /> Live pricing</span></div>
-              <div className={styles.priceRow}><strong>₹2–₹10</strong><span>per connected<br />minute</span></div>
-              <p>Your typical all-in estimate. The final rate reflects the exact providers and carrier route used.</p>
+              <div className={styles.priceRow}><strong>₹3–₹6</strong><span>per connected<br />minute</span></div>
+              <p>Pay only for connected call time. The final rate reflects your language model, speech, voice, and telephony stack.</p>
               <div className={styles.miniBreakdown}>
                 <div><span>Platform fee</span><strong>₹0</strong></div><div><span>Minimum spend</span><strong>None</strong></div><div><span>Billing</span><strong>Per use</strong></div>
               </div>
@@ -151,7 +151,7 @@ export function PricingExperience() {
 
             <aside className={styles.estimate} id="pricing-estimate" aria-live="polite">
               <span className={styles.estimateLabel}>Estimated monthly cost</span><strong>{formatInr(estimate.minimum)}<i>–</i>{formatInr(estimate.maximum)}</strong><p>before taxes, with no recurring platform fee</p>
-              <div className={styles.estimateStats}><div><span>Connected minutes</span><strong>{estimate.totalMinutes.toLocaleString("en-IN", { maximumFractionDigits: 1 })}</strong></div><div><span>Estimated rate</span><strong>₹2–₹10</strong></div></div>
+              <div className={styles.estimateStats}><div><span>Connected minutes</span><strong>{estimate.totalMinutes.toLocaleString("en-IN", { maximumFractionDigits: 1 })}</strong></div><div><span>Estimated rate</span><strong>₹3–₹6</strong></div></div>
               <div className={styles.equation}><span>{estimate.calls.toLocaleString()} calls</span><b>×</b><span>{estimate.minutes} min</span><b>=</b><span>{estimate.totalMinutes.toLocaleString()} min</span></div>
               <small>Actual cost varies with your carrier route, AI model, transcription provider, and voice.</small>
             </aside>

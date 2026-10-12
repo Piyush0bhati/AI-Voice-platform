@@ -26,7 +26,7 @@ export const useCaseExperiences: Record<string, UseCaseExperience> = {
       action: "Intent and implementation timeline captured",
     },
     proof: [
-      { value: "24/7", label: "inbound and outbound qualification" },
+      { value: "Configured", label: "inbound and outbound qualification" },
       { value: "Live", label: "CRM-ready context capture" },
       { value: "Warm", label: "sales handoffs with full context" },
     ],
@@ -64,7 +64,7 @@ export const useCaseExperiences: Record<string, UseCaseExperience> = {
       action: "Order context retrieved · exception workflow opened",
     },
     proof: [
-      { value: "24/7", label: "routine support coverage" },
+      { value: "Configured", label: "routine support coverage" },
       { value: "One", label: "continuous conversation record" },
       { value: "Clear", label: "escalations with useful context" },
     ],
@@ -102,7 +102,7 @@ export const useCaseExperiences: Record<string, UseCaseExperience> = {
       action: "Service area confirmed · calendar checked",
     },
     proof: [
-      { value: "24/7", label: "front-desk call coverage" },
+      { value: "Configured", label: "front-desk call coverage" },
       { value: "Live", label: "routing and appointment actions" },
       { value: "Never", label: "send a valuable call straight to voicemail" },
     ],

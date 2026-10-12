@@ -4,7 +4,7 @@ import { docsTopics } from "@/lib/docsContent";
 import { articlePages, commercialPages, comparisonPages, integrationPages } from "@/config/seoPages";
 const baseUrl = "https://www.vozon.ai";
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/product", "/pricing", "/business", "/integrations", "/compare", "/docs", "/about", "/contact", "/career", "/privacy", "/terms"];
+  const staticRoutes = ["", "/product", "/pricing", "/business", "/integrations", "/compare", "/docs", "/company", "/about", "/team", "/contact", "/career", "/privacy", "/terms"];
   const services = servicePages.map((page) => `/services/${page.slug}`);
   const useCases = businessPages.filter((page) => page.kicker === "Use Cases").map((page) => `/business/${page.slug}`);
   const industries = businessPages.filter((page) => page.kicker === "Industries").map((page) => `/business/industries/${page.slug}`);

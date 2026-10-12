@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { ApiReferenceExperience } from "@/components/docs/ApiReferenceExperience";
+import { SiteLayout } from "@/components/layout/SiteLayout";
 
 export const metadata: Metadata = {
   title: "API Reference & Interactive Explorer | Vozon Voice AI",
@@ -15,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function ApiReferencePage() {
-  return <ApiReferenceExperience />;
+  return <SiteLayout><ApiReferenceExperience /></SiteLayout>;
 }

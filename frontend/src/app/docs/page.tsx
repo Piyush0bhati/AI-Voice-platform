@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function DocsPage() {
   return (
-    <SiteLayout showFooter={false}>
+    <SiteLayout>
       <DocsExperience />
     </SiteLayout>
   );

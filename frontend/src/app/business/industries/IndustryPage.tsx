@@ -6,6 +6,7 @@ import { businessPages } from "@/config/site";
 import { IndustryExperiencePage } from "./IndustryExperiencePage";
 
 type IndustrySlug =
+  | "healthcare"
   | "financial-services"
   | "insurance"
   | "logistics"
@@ -76,6 +77,64 @@ export function generateIndustryMetadata(slug: string) {
 }
 
 const presets: Record<IndustrySlug, IndustryPreset> = {
+  healthcare: {
+    accent: "#0b8174",
+    accentSoft: "#d9f4ea",
+    logos: ["Epic", "Cerner", "athenahealth", "Google Calendar", "Twilio", "Zendesk"],
+    photoCards: [],
+    workflows: [
+      {
+        eyebrow: "Patient access",
+        title: "Schedule, reschedule, and confirm appointments",
+        button: "Connected calendar outcome",
+        visual: "calendar",
+        points: [
+          { title: "Check live availability", body: "Offer open times from connected calendars and confirm the caller's preferred appointment during the conversation." },
+          { title: "Send clear confirmations", body: "Create the booking and send the approved appointment details without another front-desk call." },
+        ],
+      },
+      {
+        eyebrow: "Patient intake",
+        title: "Collect the details staff need before the visit",
+        button: "Structured intake record",
+        visual: "ivr",
+        points: [
+          { title: "Capture required fields", body: "Collect patient, location, reason for calling, and callback information in a natural conversation." },
+          { title: "Keep clinical boundaries clear", body: "Use approved information and move medical judgment, urgent symptoms, or uncertain requests to people." },
+        ],
+      },
+      {
+        eyebrow: "Care coordination",
+        title: "Route urgent and complex calls with context",
+        button: "Care-team-ready handoff",
+        visual: "routing",
+        points: [
+          { title: "Recognize escalation conditions", body: "Follow explicit rules for emergency instructions, priority routing, and requests to speak with staff." },
+          { title: "Prevent repeated explanations", body: "Attach the caller's reason, collected details, and conversation summary to the handoff." },
+        ],
+      },
+    ],
+    integrations: ["Epic", "Cerner", "athenahealth", "Google Calendar", "Cal.com", "Twilio", "Webhooks"],
+    faqs: [
+      "Can the agent book and reschedule patient appointments?",
+      "How are urgent or emergency symptoms handled?",
+      "Can healthcare calls be transferred to the right care team?",
+      "Can summaries sync with scheduling or patient systems?",
+    ],
+    reviewBenefits: [
+      { title: "Faster Patient Access", body: "Answer scheduling, intake, and routine service calls without adding front-desk hold time." },
+      { title: "Clear Safety Boundaries", body: "Keep medical advice with clinicians while automating approved administrative workflows." },
+      { title: "Prepared Care Teams", body: "Send structured context into each handoff so staff can continue the conversation efficiently." },
+    ],
+    quote: {
+      primary: "Patients receive a clear next step while staff retain control of every sensitive decision.",
+      primaryName: "Patient Access Operations",
+      primaryRole: "Healthcare workflow",
+      secondary: "Connected scheduling and careful escalation make routine calls easier to manage.",
+      secondaryName: "Care Coordination",
+      secondaryRole: "Clinical operations",
+    },
+  },
   "financial-services": {
     accent: "#00ADB5",
     accentSoft: "#ccfbf1",

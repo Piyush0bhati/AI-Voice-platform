@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { integrationCategories, integrations, type IntegrationCategory } from "@/config/integrationCatalog";
+import styles from "./IntegrationDirectory.module.css";
 
 type Category = "All" | IntegrationCategory;
 
@@ -23,9 +24,9 @@ export function IntegrationDirectory() {
   }, [category, query]);
 
   return (
-    <section className="scroll-mt-20 bg-white px-5 py-9 sm:px-7 sm:py-11" id="integration-directory">
-      <div className="mx-auto max-w-[1340px]">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+    <section className={`scroll-mt-20 bg-white px-5 py-9 sm:px-7 sm:py-11 ${styles.section}`} id="integration-directory">
+      <div className={`mx-auto max-w-[1340px] ${styles.shell}`}>
+        <div className={`flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between ${styles.heading}`}>
           <div className="max-w-[720px]">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#0f8777]">Integration directory</p>
             <h2 className="mt-4 text-[clamp(1.6rem,2.35vw,2.25rem)] font-semibold leading-[1.12] tracking-[-0.04em] text-[#111312]">
@@ -35,7 +36,7 @@ export function IntegrationDirectory() {
               Every card below comes from Vozon&apos;s integration catalog and opens its own detail page.
             </p>
           </div>
-          <label className="flex w-full max-w-sm flex-col gap-2 text-xs font-semibold text-[#52645f]">
+          <label className={`flex w-full max-w-sm flex-col gap-2 text-xs font-semibold text-[#52645f] ${styles.search}`}>
             Search integrations
             <input
               className="w-full rounded-xl border border-[#dbe4e1] bg-white px-4 py-3 text-sm text-[#14231f] outline-none placeholder:text-[#8b9b95] focus:border-[#0f8777] focus:ring-2 focus:ring-[#0f8777]/10"
@@ -47,7 +48,7 @@ export function IntegrationDirectory() {
           </label>
         </div>
 
-        <div aria-label="Filter integrations by category" className="mt-8 flex flex-wrap gap-1.5">
+        <div aria-label="Filter integrations by category" className={`mt-8 flex flex-wrap gap-1.5 ${styles.filters}`}>
           {(["All", ...integrationCategories] as const).map((item) => (
             <button
               aria-pressed={category === item}
@@ -66,20 +67,20 @@ export function IntegrationDirectory() {
         </p>
 
         {filtered.length ? (
-          <div className="mt-4 grid items-start gap-2 sm:grid-cols-2 xl:grid-cols-3" role="list">
+          <div className={`mt-4 grid items-start gap-2 sm:grid-cols-2 xl:grid-cols-3 ${styles.grid}`} role="list">
             {filtered.map((integration) => (
               <Link
-                className="group flex items-start gap-2.5 self-start rounded-xl border border-[#dbe4e1] bg-white p-3 transition hover:border-[#0f8777] hover:bg-[#f9fcfb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f8777]"
+                className={`group flex items-start gap-2.5 self-start rounded-xl border border-[#dbe4e1] bg-white p-3 transition hover:border-[#0f8777] hover:bg-[#f9fcfb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f8777] ${styles.card}`}
                 href={`/integrations/${integration.slug}`}
                 key={integration.slug}
                 role="listitem"
               >
                 {integration.slug !== "vozon-ai" && (
-                  <span className="relative grid size-9 shrink-0 place-items-center rounded-lg border border-[#e3ebe8] bg-[#f7f9f8]">
+                  <span className={`relative grid size-9 shrink-0 place-items-center rounded-lg border border-[#e3ebe8] bg-[#f7f9f8] ${styles.logo}`}>
                     <Image alt="" className="object-contain p-1.5" fill sizes="36px" src={integration.logo} />
                   </span>
                 )}
-                <div className="min-w-0 flex-1">
+                <div className={`min-w-0 flex-1 ${styles.content}`}>
                   <div className="flex items-start justify-between gap-2">
                     {integration.slug === "vozon-ai" ? (
                       <>
@@ -91,10 +92,10 @@ export function IntegrationDirectory() {
                     ) : (
                       <h3 className="text-sm font-semibold leading-5 text-[#14231f]">{integration.name}</h3>
                     )}
-                    <span aria-hidden="true" className="shrink-0 text-base font-semibold leading-5 text-[#0f8777] transition group-hover:translate-x-1">&rarr;</span>
+                    <span aria-hidden="true" className={`shrink-0 text-base font-semibold leading-5 text-[#0f8777] transition group-hover:translate-x-1 ${styles.arrow}`}>&rarr;</span>
                   </div>
-                  <p className="mt-0.5 text-[11px] font-medium text-[#71817d]">{integration.category}</p>
-                  <p className="mt-1 line-clamp-2 text-xs leading-[1.4] text-[#60706a]">{integration.description}</p>
+                  <p className={`mt-0.5 text-[11px] font-medium text-[#71817d] ${styles.category}`}>{integration.category}</p>
+                  <p className={`mt-1 line-clamp-2 text-xs leading-[1.4] text-[#60706a] ${styles.description}`}>{integration.description}</p>
                 </div>
               </Link>
             ))}
