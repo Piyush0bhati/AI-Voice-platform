@@ -439,7 +439,7 @@ export function TestCallPanel({ agentId, agentName, knowledgeCount, recordingEna
             <label className="grid gap-2 text-xs font-bold text-white/56">
               <span>Destination number</span>
               <input
-                className="app-control-text min-h-11 rounded-xl border border-white/10 bg-[#ffffff] px-3 text-white outline-none transition placeholder:text-white/32 focus:border-[#118778] focus:ring-3 focus:ring-[#118778]/15"
+                className="app-control-text min-h-11 rounded-xl border border-[#c6d4d0] bg-white px-3 text-[#14231f] outline-none transition placeholder:text-[#71817d] hover:border-[#9fcfc3] focus:border-[#118778] focus:ring-3 focus:ring-[#118778]/15"
                 placeholder="+12525550123"
                 type="tel"
                 inputMode="tel"

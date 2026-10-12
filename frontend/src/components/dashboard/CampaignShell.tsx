@@ -96,7 +96,7 @@ const campaignSteps = ["Setup", "Audience", "Timing", "Instructions", "Review"];
 const buttonClass =
   "app-button-text inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-4 transition disabled:cursor-not-allowed disabled:opacity-50";
 const controlClass =
-  "app-control-text min-h-11 w-full rounded-lg border border-white/10 bg-[#ffffff] px-3 text-white outline-none transition placeholder:text-white/45 focus:border-[#118778] focus:ring-4 focus:ring-[#118778]/10";
+  "app-control-text min-h-11 w-full rounded-lg border border-[#c6d4d0] bg-white px-3 text-[#14231f] outline-none transition placeholder:text-[#71817d] hover:border-[#9fcfc3] focus:border-[#118778] focus:ring-4 focus:ring-[#118778]/10";
 
 function Icon({
   icon,
@@ -1377,7 +1377,7 @@ export function CampaignShell() {
                         <label className="app-label grid gap-2">
                           Goal
                           <textarea
-                            className="app-control-text min-h-36 resize-y rounded-2xl border border-white/10 bg-[#ffffff] p-4 text-white shadow-[0_1px_0_rgba(0,0,0,0.18)] outline-none transition placeholder:text-white/45 hover:border-white/20 focus:border-[#118778] focus:ring-4 focus:ring-[#118778]/10"
+                            className="app-control-text min-h-36 resize-y rounded-2xl border border-[#c6d4d0] bg-white p-4 text-[#14231f] shadow-[0_1px_0_rgba(0,0,0,0.06)] outline-none transition placeholder:text-[#71817d] hover:border-[#9fcfc3] focus:border-[#118778] focus:ring-4 focus:ring-[#118778]/10"
                             placeholder="Confirm appointment interest and capture preferred callback time."
                             value={campaignGoal}
                             onChange={(event) =>

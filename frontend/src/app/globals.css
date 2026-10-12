@@ -2184,3 +2184,27 @@ html:not([data-brand-source="white_label"]) :is(.dashboard-home-theme, .agents-h
     }
   }
 }
+
+/* Dashboard forms use light control surfaces. Keep entered values readable
+   even when a component still carries a legacy text-white utility. */
+.dashboard-home-theme.dashboard-home-theme input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+.dashboard-home-theme.dashboard-home-theme textarea:not([data-dashboard-text="light"]),
+.dashboard-home-theme.dashboard-home-theme select:not([data-dashboard-text="light"]) {
+  color: #14231f !important;
+  -webkit-text-fill-color: #14231f !important;
+  caret-color: #118778 !important;
+}
+
+.dashboard-home-theme.dashboard-home-theme input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"])::placeholder,
+.dashboard-home-theme.dashboard-home-theme textarea:not([data-dashboard-text="light"])::placeholder {
+  color: #71817d !important;
+  -webkit-text-fill-color: #71817d !important;
+  opacity: 1;
+}
+
+.dashboard-home-theme.dashboard-home-theme input:disabled:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+.dashboard-home-theme.dashboard-home-theme textarea:disabled:not([data-dashboard-text="light"]),
+.dashboard-home-theme.dashboard-home-theme select:disabled:not([data-dashboard-text="light"]) {
+  color: #9a9dac !important;
+  -webkit-text-fill-color: #9a9dac !important;
+}
