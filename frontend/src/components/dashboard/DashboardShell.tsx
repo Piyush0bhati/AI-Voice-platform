@@ -1579,6 +1579,12 @@ const fallbackCatalog: ModelCatalog = {
       configured: true,
       models: ["sarvam-30b"],
     },
+    {
+      provider: "inception",
+      label: "Inception Mercury",
+      configured: false,
+      models: ["mercury-2.5"],
+    },
   ],
   stt: [
     {

@@ -35,6 +35,7 @@ const SARVAM_PRICING = "https://docs.sarvam.ai/api/getting-started/pricing";
 const ELEVENLABS_PRICING = "https://elevenlabs.io/pricing/api";
 const DEEPGRAM_PRICING = "https://deepgram.com/pricing";
 const CARTESIA_PRICING = "https://docs.cartesia.ai/pricing";
+const INCEPTION_PRICING = "https://docs.inceptionlabs.ai/get-started/models";
 
 export const modelPricingCategories: readonly ModelPriceCategory[] = [
   {
@@ -96,6 +97,16 @@ export const modelPricingCategories: readonly ModelPriceCategory[] = [
         models: [
           { name: "sarvam-30b", rate: "₹2.50 in · ₹10.00 out", unit: "per 1M tokens", badge: "Recommended" },
           { name: "sarvam-105b", rate: "₹4.00 in · ₹16.00 out", unit: "per 1M tokens" },
+        ],
+      },
+      {
+        name: "Inception Mercury",
+        shortName: "M",
+        accent: "#8b5cf6",
+        sourceUrl: INCEPTION_PRICING,
+        models: [
+          { name: "mercury-2.5", rate: "$0.04 in · $0.15 out", unit: "per 1M tokens", detail: "$0.004 cached input; launch pricing", badge: "Recommended" },
+          { name: "mercury-voice", rate: "$0.20 in · $0.75 out", unit: "per 1M tokens", detail: "$0.02 cached input; enterprise access and launch pricing", badge: "Voice" },
         ],
       },
     ],
