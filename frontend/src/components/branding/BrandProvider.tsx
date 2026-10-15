@@ -137,3 +137,5 @@ export function useBrand() {
   return useContext(BrandContext);
 }
 
+export default BrandProvider;
+

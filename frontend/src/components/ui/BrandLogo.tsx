@@ -65,3 +65,5 @@ export function BrandLogo({
     </Link>
   );
 }
+
+export default BrandLogo;

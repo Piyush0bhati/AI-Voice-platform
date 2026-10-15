@@ -48,6 +48,7 @@ type PhoneNumberModalsProps = {
 
 const providers: { id: TelephonyProvider; description: string; docs: string }[] = [
   { id: "Twilio", description: "Verify an owned number with an Account SID and production API key.", docs: "https://www.twilio.com/docs/phone-numbers/api/incomingphonenumber-resource" },
+  { id: "Plivo", description: "Verify an owned number with your Plivo Auth ID and Auth Token via Zentrunk SIP trunking.", docs: "https://www.plivo.com/docs/sip-trunking/api/overview/" },
   { id: "Exotel", description: "Verify an ExoPhone with its account credentials and regional data center.", docs: "https://developer.exotel.com/docs/exophones/api-reference/list-numbers" },
   { id: "Vobiz", description: "Verify an owned number using your Vobiz Auth ID and Auth Token.", docs: "https://docs.vobiz.ai/account-phone-number/list-account-phone-numbers" },
 ];
@@ -148,16 +149,21 @@ function ImportNumberModal({ busy, requestError, onClose, onImport }: {
   const [accountSid, setAccountSid] = useState("");
   const [apiKeySid, setApiKeySid] = useState("");
   const [apiKeySecret, setApiKeySecret] = useState("");
+  const [trunkSid, setTrunkSid] = useState("");
   const [apiRegion, setApiRegion] = useState<"us1" | "au1" | "ie1">("us1");
   const [exotelApiKey, setExotelApiKey] = useState("");
   const [exotelApiToken, setExotelApiToken] = useState("");
   const [dataCenter, setDataCenter] = useState<"mumbai" | "singapore">("mumbai");
   const [authId, setAuthId] = useState("");
   const [authToken, setAuthToken] = useState("");
+  const [plivoAuthId, setPlivoAuthId] = useState("");
+  const [plivoAuthToken, setPlivoAuthToken] = useState("");
+  const [plivoTrunkId, setPlivoTrunkId] = useState("");
   const normalizedPhoneNumber = phoneNumber.trim();
   const normalizedApiKeySecret = apiKeySecret.trim();
   const normalizedExotelApiToken = exotelApiToken.trim();
   const normalizedAuthToken = authToken.trim();
+  const normalizedPlivoAuthToken = plivoAuthToken.trim();
   const validationReason = (() => {
     if (!normalizedPhoneNumber) return "Enter the phone number you own.";
     if (!/^\+[1-9]\d{7,14}$/.test(normalizedPhoneNumber)) {
@@ -167,6 +173,11 @@ function ImportNumberModal({ busy, requestError, onClose, onImport }: {
       if (!/^AC[0-9a-fA-F]{32}$/.test(accountSid.trim())) return "Enter a valid Twilio Account SID beginning with AC.";
       if (!/^SK[0-9a-fA-F]{32}$/.test(apiKeySid.trim())) return "Enter a valid Twilio API Key SID beginning with SK.";
       if (!normalizedApiKeySecret) return "Enter the Twilio API Key Secret.";
+      return "";
+    }
+    if (provider === "Plivo") {
+      if (!plivoAuthId.trim()) return "Enter the Plivo Auth ID.";
+      if (!normalizedPlivoAuthToken) return "Enter the Plivo Auth Token.";
       return "";
     }
     if (provider === "Exotel") {
@@ -191,6 +202,15 @@ function ImportNumberModal({ busy, requestError, onClose, onImport }: {
         apiKeySid: apiKeySid.trim(),
         apiKeySecret: normalizedApiKeySecret,
         apiRegion,
+        trunkSid: trunkSid.trim() || undefined,
+      });
+    } else if (provider === "Plivo") {
+      onImport({
+        ...common,
+        provider,
+        authId: plivoAuthId.trim(),
+        authToken: normalizedPlivoAuthToken,
+        trunkId: plivoTrunkId.trim() || undefined,
       });
     } else if (provider === "Exotel") {
       onImport({
@@ -222,7 +242,7 @@ function ImportNumberModal({ busy, requestError, onClose, onImport }: {
 
           <section className="grid gap-3">
             <div><span className="app-label text-[#0e6f62]">Step 1</span><h3 className="app-section-title mt-1 mb-0">Choose provider</h3></div>
-            <div className="grid grid-cols-3 gap-1 rounded-xl border border-[#dbe4e1] bg-[#f7f9f8] p-1">
+            <div className="grid grid-cols-2 gap-1 rounded-xl border border-[#dbe4e1] bg-[#f7f9f8] p-1 sm:grid-cols-4">
               {providers.map((item) => (
                 <button
                   className={`min-h-10 rounded-lg px-2 text-center transition ${provider === item.id ? "border border-[#9fcfc3] bg-white text-[#0e6f62]" : "border border-transparent text-[#64748b] hover:bg-white hover:text-[#334155]"}`}
@@ -286,6 +306,29 @@ function ImportNumberModal({ busy, requestError, onClose, onImport }: {
                 API Key Secret
                 <input className={controlClass} autoComplete="new-password" disabled={busy} placeholder="Twilio API Key Secret" type="password" value={apiKeySecret} onChange={(event) => setApiKeySecret(event.target.value)} />
               </label>
+              <label className="app-label grid gap-2">
+                <span>Twilio SIP Trunk SID <span className="font-normal text-[#94a3b8]">(optional)</span></span>
+                <input className={controlClass} autoComplete="off" disabled={busy} placeholder="TK... (optional Elastic SIP Trunk)" value={trunkSid} onChange={(event) => setTrunkSid(event.target.value)} />
+                <span className="app-caption font-normal">If provided, the number maps directly to your Twilio Elastic SIP Trunk. Otherwise, automatic TwiML SIP forwarding is configured.</span>
+              </label>
+            </div>
+          ) : null}
+
+          {provider === "Plivo" ? (
+            <div className="grid gap-4 rounded-xl border border-[#e6ecea] bg-[#f8fafc] p-4">
+              <label className="app-label grid gap-2">
+                Plivo Auth ID
+                <input className={controlClass} autoComplete="off" disabled={busy} placeholder="MA... or SA..." value={plivoAuthId} onChange={(event) => setPlivoAuthId(event.target.value)} />
+              </label>
+              <label className="app-label grid gap-2">
+                Plivo Auth Token
+                <input className={controlClass} autoComplete="new-password" disabled={busy} placeholder="Plivo Auth Token" type="password" value={plivoAuthToken} onChange={(event) => setPlivoAuthToken(event.target.value)} />
+              </label>
+              <label className="app-label grid gap-2">
+                <span>Plivo Zentrunk Inbound Trunk ID <span className="font-normal text-[#94a3b8]">(optional)</span></span>
+                <input className={controlClass} autoComplete="off" disabled={busy} placeholder="Zentrunk Inbound Trunk ID" value={plivoTrunkId} onChange={(event) => setPlivoTrunkId(event.target.value)} />
+                <span className="app-caption font-normal">If provided, your number maps directly to your Plivo Zentrunk inbound SIP trunk. Otherwise, automatic XML SIP forwarding is configured.</span>
+              </label>
             </div>
           ) : null}
 
@@ -333,7 +376,7 @@ function ImportNumberModal({ busy, requestError, onClose, onImport }: {
             <p className="app-caption m-0">
               {provider === "Vobiz"
                 ? "Vobiz credentials are encrypted and retained because they are required to configure inbound SIP routing."
-                : `${provider} credentials are used server-side to verify that the number belongs to your account and are not stored.`}
+                : `${provider} credentials are used server-side to verify that the number belongs to your account and configure SIP trunk routing.`}
             </p>
           </div>
 

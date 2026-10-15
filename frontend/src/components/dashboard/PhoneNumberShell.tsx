@@ -201,6 +201,8 @@ function formatDate(value: string) {
 function providerTone(provider: string) {
   if (provider === "Twilio")
     return "border-[#fee2e2] bg-[#fff1f2] text-[#be123c]";
+  if (provider === "Plivo")
+    return "border-[#e0e7ff] bg-[#eef2ff] text-[#4338ca]";
   if (provider === "Exotel")
     return "border-[#b8c8c3] bg-[#edf7f4] text-[#0e6f62]";
   return "border-[#d1fae5] bg-[#ecfdf5] text-[#047857]";
@@ -724,7 +726,7 @@ export function PhoneNumberShell() {
                     No phone numbers yet
                   </h3>
                   <p className="app-caption mt-1 mb-4">
-                    Import from Twilio, Exotel, or Vobiz-or buy a new Vobiz
+                    Import from Twilio, Plivo, Exotel, or Vobiz-or buy a new Vobiz
                     number.
                   </p>
                   <div className="flex flex-wrap justify-center gap-2">

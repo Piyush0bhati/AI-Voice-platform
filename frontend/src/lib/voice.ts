@@ -30,8 +30,8 @@ export function publicVoiceMessage(
 export type ProviderModel = "openai-realtime" | "gemini-live" | "gemini-realtime" | "sarvam-gemini";
 export type PipelineMode = "realtime" | "pipeline";
 export type RealtimeProvider = "openai" | "gemini";
-export type PipelineProvider = "openai" | "gemini" | "sarvam" | "inception" | "elevenlabs" | "cartesia";
-export type SttProvider = "openai" | "sarvam" | "elevenlabs" | "deepgram" | "cartesia";
+export type PipelineProvider = "openai" | "gemini" | "sarvam" | "inception" | "elevenlabs" | "cartesia" | "deepgram" | "azure";
+export type SttProvider = "openai" | "sarvam" | "elevenlabs" | "deepgram" | "cartesia" | "azure";
 export type FirstMessageMode =
   "assistant-speaks-first" | "user-speaks-first" | "model-generated";
 
@@ -470,7 +470,7 @@ export type BackendPhoneNumber = {
   createdAt: string;
 };
 
-export type TelephonyProvider = "Twilio" | "Exotel" | "Vobiz";
+export type TelephonyProvider = "Twilio" | "Exotel" | "Vobiz" | "Plivo";
 
 export type PhoneNumberImportInput =
   | {
@@ -482,6 +482,16 @@ export type PhoneNumberImportInput =
       apiKeySid: string;
       apiKeySecret: string;
       apiRegion: "us1" | "au1" | "ie1";
+      trunkSid?: string;
+    }
+  | {
+      provider: "Plivo";
+      phoneNumber: string;
+      label: string;
+      direction?: BackendPhoneNumber["direction"];
+      authId: string;
+      authToken: string;
+      trunkId?: string;
     }
   | {
       provider: "Exotel";

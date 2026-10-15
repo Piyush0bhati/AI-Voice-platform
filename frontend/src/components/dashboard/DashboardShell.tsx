@@ -856,6 +856,230 @@ const fallbackCartesiaVoiceProfiles: VoiceProfile[] = [
   },
 ];
 
+const fallbackDeepgramVoices = [
+  "aura-2-thalia-en",
+  "aura-2-asteria-en",
+  "aura-2-luna-en",
+  "aura-2-orion-en",
+  "aura-2-arcas-en",
+  "aura-2-aurora-en",
+  "aura-asteria-en",
+  "aura-luna-en",
+  "aura-orion-en",
+];
+
+const fallbackDeepgramVoiceProfiles: VoiceProfile[] = [
+  {
+    value: "aura-2-thalia-en",
+    label: "Thalia (Aura-2)",
+    gender: "female",
+    model: "aura-2",
+    useCase: "Conversational agents",
+    tone: "clear and friendly",
+    languageCodes: ["en-US"],
+  },
+  {
+    value: "aura-2-asteria-en",
+    label: "Asteria (Aura-2)",
+    gender: "female",
+    model: "aura-2",
+    useCase: "Customer support",
+    tone: "warm and natural",
+    languageCodes: ["en-US"],
+  },
+  {
+    value: "aura-2-luna-en",
+    label: "Luna (Aura-2)",
+    gender: "female",
+    model: "aura-2",
+    useCase: "Virtual assistants",
+    tone: "calm and pleasant",
+    languageCodes: ["en-US"],
+  },
+  {
+    value: "aura-2-orion-en",
+    label: "Orion (Aura-2)",
+    gender: "male",
+    model: "aura-2",
+    useCase: "Sales and outreach",
+    tone: "confident and engaging",
+    languageCodes: ["en-US"],
+  },
+  {
+    value: "aura-2-arcas-en",
+    label: "Arcas (Aura-2)",
+    gender: "male",
+    model: "aura-2",
+    useCase: "Technical assistance",
+    tone: "authoritative and deep",
+    languageCodes: ["en-US"],
+  },
+  {
+    value: "aura-asteria-en",
+    label: "Asteria (Aura)",
+    gender: "female",
+    model: "aura-1",
+    useCase: "Customer care",
+    tone: "conversational",
+    languageCodes: ["en-US"],
+  },
+  {
+    value: "aura-orion-en",
+    label: "Orion (Aura)",
+    gender: "male",
+    model: "aura-1",
+    useCase: "Sales calls",
+    tone: "clear and professional",
+    languageCodes: ["en-US"],
+  },
+];
+
+const fallbackAzureVoices = [
+  "en-US-JennyNeural",
+  "en-US-GuyNeural",
+  "en-US-AriaNeural",
+  "en-US-DavisNeural",
+  "en-IN-NeerjaNeural",
+  "en-IN-PrabhatNeural",
+  "hi-IN-SwaraNeural",
+  "hi-IN-MadhurNeural",
+  "en-GB-SoniaNeural",
+  "en-GB-RyanNeural",
+  "es-ES-ElviraNeural",
+  "fr-FR-DeniseNeural",
+  "de-DE-KatjaNeural",
+  "ar-SA-ZariyahNeural",
+];
+
+const fallbackAzureVoiceProfiles: VoiceProfile[] = [
+  {
+    value: "en-US-JennyNeural",
+    label: "Jenny (en-US)",
+    gender: "female",
+    model: "azure-neural",
+    useCase: "Conversational & support",
+    tone: "warm and friendly",
+    languageCodes: ["en-US"],
+  },
+  {
+    value: "en-US-GuyNeural",
+    label: "Guy (en-US)",
+    gender: "male",
+    model: "azure-neural",
+    useCase: "Professional assistance",
+    tone: "natural and confident",
+    languageCodes: ["en-US"],
+  },
+  {
+    value: "en-US-AriaNeural",
+    label: "Aria (en-US)",
+    gender: "female",
+    model: "azure-neural",
+    useCase: "Dynamic conversation",
+    tone: "versatile and expressive",
+    languageCodes: ["en-US"],
+  },
+  {
+    value: "en-US-DavisNeural",
+    label: "Davis (en-US)",
+    gender: "male",
+    model: "azure-neural",
+    useCase: "Customer service",
+    tone: "calm and reassuring",
+    languageCodes: ["en-US"],
+  },
+  {
+    value: "en-IN-NeerjaNeural",
+    label: "Neerja (en-IN)",
+    gender: "female",
+    model: "azure-neural",
+    useCase: "Indian English calling",
+    tone: "natural Indian English",
+    languageCodes: ["en-IN"],
+  },
+  {
+    value: "en-IN-PrabhatNeural",
+    label: "Prabhat (en-IN)",
+    gender: "male",
+    model: "azure-neural",
+    useCase: "Indian English calling",
+    tone: "clear Indian English",
+    languageCodes: ["en-IN"],
+  },
+  {
+    value: "hi-IN-SwaraNeural",
+    label: "Swara (hi-IN)",
+    gender: "female",
+    model: "azure-neural",
+    useCase: "Hindi conversation",
+    tone: "expressive Hindi",
+    languageCodes: ["hi-IN", "hi"],
+  },
+  {
+    value: "hi-IN-MadhurNeural",
+    label: "Madhur (hi-IN)",
+    gender: "male",
+    model: "azure-neural",
+    useCase: "Hindi assistance",
+    tone: "professional Hindi",
+    languageCodes: ["hi-IN", "hi"],
+  },
+  {
+    value: "en-GB-SoniaNeural",
+    label: "Sonia (en-GB)",
+    gender: "female",
+    model: "azure-neural",
+    useCase: "British English",
+    tone: "natural British",
+    languageCodes: ["en-GB"],
+  },
+  {
+    value: "en-GB-RyanNeural",
+    label: "Ryan (en-GB)",
+    gender: "male",
+    model: "azure-neural",
+    useCase: "British English",
+    tone: "professional British",
+    languageCodes: ["en-GB"],
+  },
+  {
+    value: "es-ES-ElviraNeural",
+    label: "Elvira (es-ES)",
+    gender: "female",
+    model: "azure-neural",
+    useCase: "Spanish conversation",
+    tone: "warm and natural Spanish",
+    languageCodes: ["es-ES", "es"],
+  },
+  {
+    value: "fr-FR-DeniseNeural",
+    label: "Denise (fr-FR)",
+    gender: "female",
+    model: "azure-neural",
+    useCase: "French conversation",
+    tone: "natural French",
+    languageCodes: ["fr-FR", "fr"],
+  },
+  {
+    value: "de-DE-KatjaNeural",
+    label: "Katja (de-DE)",
+    gender: "female",
+    model: "azure-neural",
+    useCase: "German conversation",
+    tone: "clear German",
+    languageCodes: ["de-DE", "de"],
+  },
+  {
+    value: "ar-SA-ZariyahNeural",
+    label: "Zariyah (ar-SA)",
+    gender: "female",
+    model: "azure-neural",
+    useCase: "Arabic conversation",
+    tone: "natural Arabic",
+    languageCodes: ["ar-SA", "ar"],
+  },
+];
+
 const elevenLabsV25LanguageCodes = new Set([
   "en",
   "hi",
@@ -1585,6 +1809,12 @@ const fallbackCatalog: ModelCatalog = {
       configured: false,
       models: ["mercury-2.5"],
     },
+    {
+      provider: "azure",
+      label: "Azure OpenAI",
+      configured: true,
+      models: ["gpt-4o-mini", "gpt-4o", "gpt-4-turbo", "gpt-35-turbo"],
+    },
   ],
   stt: [
     {
@@ -1625,12 +1855,18 @@ const fallbackCatalog: ModelCatalog = {
       provider: "cartesia",
       label: "Cartesia",
       configured: true,
-      models: ["ink-2", "ink-whisper"],
+      models: ["ink-2"],
       languages: fallbackLanguageCatalog,
       languagesByModel: {
-        "ink-2": fallbackCartesiaEnglishLanguages,
-        "ink-whisper": fallbackLanguageCatalog,
+        "ink-2": fallbackLanguageCatalog,
       },
+    },
+    {
+      provider: "azure",
+      label: "Azure Speech",
+      configured: true,
+      models: ["azure-speech-stt"],
+      languages: fallbackLanguageCatalog,
     },
   ],
   tts: [
@@ -1702,6 +1938,34 @@ const fallbackCatalog: ModelCatalog = {
       languages: fallbackCartesiaTtsLanguages,
       voicesByLanguage: voicesByLanguageFromProfiles(
         fallbackCartesiaVoiceProfiles,
+        fallbackLanguageCatalog,
+      ),
+      showAllVoicesWithLanguageOrder: true,
+    },
+    {
+      provider: "deepgram",
+      label: "Deepgram Aura",
+      configured: true,
+      models: ["aura-2", "aura-1"],
+      voices: fallbackDeepgramVoices,
+      voiceProfiles: fallbackDeepgramVoiceProfiles,
+      languages: fallbackLanguageCatalog.filter((l) => l.code.startsWith("en")),
+      voicesByLanguage: voicesByLanguageFromProfiles(
+        fallbackDeepgramVoiceProfiles,
+        fallbackLanguageCatalog,
+      ),
+      showAllVoicesWithLanguageOrder: true,
+    },
+    {
+      provider: "azure",
+      label: "Azure Speech",
+      configured: true,
+      models: ["azure-neural"],
+      voices: fallbackAzureVoices,
+      voiceProfiles: fallbackAzureVoiceProfiles,
+      languages: fallbackLanguageCatalog,
+      voicesByLanguage: voicesByLanguageFromProfiles(
+        fallbackAzureVoiceProfiles,
         fallbackLanguageCatalog,
       ),
       showAllVoicesWithLanguageOrder: true,
@@ -2346,17 +2610,7 @@ function normalizeSttModelForLanguage(
   languageCatalog: readonly VoiceLanguageOption[],
 ) {
   if (provider === "cartesia") {
-    const normalized = language.trim().toLowerCase();
-    const selectedLanguage = languageCatalog.find((item) =>
-      [item.value, item.label, item.code].some(
-        (candidate) => candidate.toLowerCase() === normalized,
-      ),
-    );
-    const baseCode = cartesiaBaseLanguageCode(selectedLanguage?.code ?? "unknown");
-    if (baseCode === "en") {
-      return model === "ink-whisper" ? model : "ink-2";
-    }
-    return "ink-whisper";
+    return "ink-2";
   }
   if (provider !== "deepgram") return model;
   const models = deepgramModelsForLanguage(
@@ -2370,18 +2624,10 @@ function normalizeSttModelForLanguage(
 
 function cartesiaSttModelsForLanguage(
   models: readonly string[],
-  language: string,
-  languageCatalog: readonly VoiceLanguageOption[],
+  _language: string,
+  _languageCatalog: readonly VoiceLanguageOption[],
 ) {
-  const normalized = language.trim().toLowerCase();
-  const selectedLanguage = languageCatalog.find((item) =>
-    [item.value, item.label, item.code].some(
-      (candidate) => candidate.toLowerCase() === normalized,
-    ),
-  );
-  return cartesiaBaseLanguageCode(selectedLanguage?.code ?? "unknown") === "en"
-    ? [...models]
-    : models.filter((model) => model === "ink-whisper");
+  return models.length > 0 ? [...models] : ["ink-2"];
 }
 
 function getLanguageOptions(
