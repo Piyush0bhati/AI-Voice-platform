@@ -201,7 +201,7 @@ function roleDescription(role: OrganizationRole) {
   if (role === "owner")
     return "Full workspace ownership and administrative control.";
   if (role === "admin")
-    return "Can manage workspace settings, members, and invitations.";
+    return "Full workspace administration including members, agents, and billing.";
   if (role === "billing")
     return "Can access billing-related workspace information.";
   return "Can use shared workspace resources and assigned features.";
